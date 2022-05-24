@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Pycharm stuff
+.idea/
+
+# ignore .local configs
+.env.local
+
+

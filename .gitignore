@@ -130,3 +130,8 @@ dmypy.json
 
 # Pycharm stuff
 .idea/
+
+# ignore .local configs
+.env.local
+
+

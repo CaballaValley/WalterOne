@@ -11,7 +11,7 @@ then
     echo "PostgreSQL started"
 fi
 
-cd walterone
+cd /usr/src/app
 
 python manage.py flush --no-input
 python manage.py migrate

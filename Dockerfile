@@ -14,16 +14,16 @@ RUN apk update \
 
 # install dependencies
 RUN pip install --upgrade pip
-COPY ./requirements.txt .
+COPY ./config/dependencies/requirements.txt .
 RUN pip install psycopg2
 RUN pip install -r requirements.txt
 # copy entrypoint.sh
-COPY ./entrypoint.sh ./walterwhite-entrypoint.sh
-RUN sed -i 's/\r$//g' /usr/src/app/walterwhite-entrypoint.sh
-RUN chmod +x /usr/src/app/walterwhite-entrypoint.sh
+COPY ./deploy/docker/entrypoint.sh /walterwhite-entrypoint.sh
+RUN sed -i 's/\r$//g' /walterwhite-entrypoint.sh
+RUN chmod +x /walterwhite-entrypoint.sh
 
 # copy project
-COPY . .
+COPY ./src/python/walterone .
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/app/walterone/entrypoint.sh"]
+ENTRYPOINT ["/walterwhite-entrypoint.sh"]

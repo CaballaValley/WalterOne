@@ -7,4 +7,4 @@ fi
 
 cd src/python/walterone
 
-celery -A api worker -l INFO
+celery -A walterone worker -l DEBUG

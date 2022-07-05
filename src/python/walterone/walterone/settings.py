@@ -26,10 +26,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "fooABCDEF")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get(
-    "DJANGO_ALLOWED_HOSTS",
-    "localhost 127.0.0.1 [::1] 0.0.0.0").split(" ")
-
+# ALLOWED_HOSTS = os.environ.get(
+#     "DJANGO_ALLOWED_HOSTS",
+#     "localhost 127.0.0.1 [::1] 0.0.0.0").split(" ")
+ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -135,7 +135,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ]
 }
 
@@ -144,3 +144,4 @@ REST_FRAMEWORK = {
 CELERY_TIMEZONE = "Europe/Madrid"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_IMPORTS = ["api.tasks"]

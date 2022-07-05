@@ -1,13 +1,8 @@
-from rest_framework import views, status
-from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
-from api.serializers.actions import ActionSerializer
-from api.tasks.attack import attack_task
+from api.models.action import Attack
+from api.serializers.actions import AttackSerializer
 
-class ActionView(views.APIView):
-    def post(self, request):
-        serializer = ActionSerializer(data=request.data)
-        if serializer.is_valid():
-            attack_task.delay(request.data)
-            return Response(serializer.data,
-                            status=status.HTTP_201_CREATED)
+class AttackViewSet(ModelViewSet):
+    serializer_class = AttackSerializer
+    queryset = Attack.objects.all()

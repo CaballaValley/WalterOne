@@ -28,3 +28,5 @@ class MatchIA(models.Model):
         'Match',
         on_delete=models.CASCADE
     )
+
+    life = models.IntegerField(default=50)

@@ -11,6 +11,7 @@ class Zone(models.Model):
 
     neighbors = models.ManyToManyField(
         'Zone',
+        blank=True
     )
 
     map = models.ForeignKey(

@@ -22,6 +22,12 @@ services:
       - POSTGRES_USER=hello_django
       - POSTGRES_PASSWORD=hello_django
       - POSTGRES_DB=hello_django_dev
+  rabbitmq:
+    image: rabbitmq:3.10.5-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
 
 volumes:
   postgres_data:

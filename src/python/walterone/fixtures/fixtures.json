@@ -1,0 +1,88 @@
+[
+    {
+        "model": "api.ia",
+        "pk": 1,
+        "fields": {
+            "name": "Randolph Carter"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 2,
+        "fields": {
+            "name": "Charles dexter ward"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 3,
+        "fields": {
+            "name": "Herbert West"
+        }
+    },
+    {
+        "model": "api.map",
+        "pk": 1,
+        "fields": {
+            "name": "arkham"
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 1,
+        "fields": {
+            "name": "miskatonic university",
+            "map": 1,
+            "neighbors": []
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 2,
+        "fields": {
+            "name": "corbit house",
+            "map": 1,
+            "neighbors": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 3,
+        "fields": {
+            "name": "undergrounds",
+            "map": 1,
+            "neighbors": [
+                1,
+                2
+            ]
+        }
+    },
+    {
+        "model": "api.match",
+        "pk": 1,
+        "fields": {
+            "name": "Awakening",
+            "map": 1
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 1,
+        "fields": {
+            "ia": 1,
+            "match": 1,
+            "life": 50
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 2,
+        "fields": {
+            "ia": 2,
+            "match": 1,
+            "life": 50
+        }
+    }
+]

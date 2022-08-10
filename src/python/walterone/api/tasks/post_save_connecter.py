@@ -7,4 +7,4 @@ from api.tasks.attack import attack_task
 
 @receiver(post_save, sender=Attack)
 def send_attack_to_celery(sender, instance, **kwargs):
-    attack_task.delay("Attack!!!!")
+    attack_task.apply_async(("Attack!!!!",))

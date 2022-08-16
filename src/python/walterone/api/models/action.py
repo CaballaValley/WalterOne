@@ -49,3 +49,8 @@ class Move(Action):
         on_delete=models.CASCADE
     )
 
+    ia = models.ForeignKey(
+        'IA',
+        on_delete=models.CASCADE,
+        null=True
+    )

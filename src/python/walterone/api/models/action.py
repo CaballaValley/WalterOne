@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -54,3 +55,10 @@ class Move(Action):
         on_delete=models.CASCADE,
         null=True
     )
+
+    def clean(self):
+        last_move = self.ia.move_set.latest('timestamp')
+        is_neighbours = last_move.to_zone.neighbors.filter(id=self.to_zone.id)
+        if not is_neighbours:
+            raise ValidationError(
+                {'to_zone': "this zone is far far from here"})

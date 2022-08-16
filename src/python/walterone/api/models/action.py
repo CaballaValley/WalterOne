@@ -5,8 +5,8 @@ class Action(models.Model):
     timestamp = models.TimeField(
         auto_now_add=True
         )
-    match_ia = models.ForeignKey(
-        'MatchIA',
+    match = models.ForeignKey(
+        'Match',
         on_delete=models.CASCADE
     )
 
@@ -17,10 +17,17 @@ class Attack(Action):
     damage = models.IntegerField(
         default=10
     )
+    attack_from = models.ForeignKey(
+        'IA',
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="attack_from"
+    )
     attack_to = models.ForeignKey(
         'IA',
         on_delete=models.CASCADE,
-        null=False
+        null=False,
+        related_name="attack_to"
     )
 
 class Defend(Action):

@@ -1,8 +1,13 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
 
 class IA(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
+    
     name = models.CharField(
         null=False,
         blank=False,

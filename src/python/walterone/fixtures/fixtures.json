@@ -1,23 +1,80 @@
 [
     {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$wRJBSAGyphzWQ1Nt0fSQp8$ntZbY6Kquw6assNgsS7Hcro3YgpeV7CHy4fIR+j+j1I=",
+            "last_login": "2022-08-16T15:58:31Z",
+            "is_superuser": true,
+            "username": "ewokcillo",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-08-16T15:58:24Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$v2QhQpSNlrcJa6mxNXaspR$/ertl8A1U34vV8h9rV3aLVvJdHA91pyFGtDqNTAVyjU=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "randolphcarter",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-08-16T15:59:24.188Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$WHwx7ZjF5yxsE66OGBPxNd$O3o5o7G+Mm9RGmDy8KMsXFb9a23DAIGYRs2cQbNpnSI=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "CharlesDexterWard",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-08-16T15:59:30.635Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
         "model": "api.ia",
         "pk": 1,
         "fields": {
-            "name": "Randolph Carter"
+            "user": 1,
+            "name": "ewokcillo"
         }
     },
     {
         "model": "api.ia",
         "pk": 2,
         "fields": {
-            "name": "Charles dexter ward"
+            "user": 2,
+            "name": "randolphcarter"
         }
     },
     {
         "model": "api.ia",
         "pk": 3,
         "fields": {
-            "name": "Herbert West"
+            "user": 3,
+            "name": "CharlesDexterWard"
         }
     },
     {
@@ -64,14 +121,15 @@
         "pk": 1,
         "fields": {
             "name": "Awakening",
-            "map": 1
+            "map": 1,
+            "damage": 8
         }
     },
     {
         "model": "api.matchia",
         "pk": 1,
         "fields": {
-            "ia": 1,
+            "ia": 2,
             "match": 1,
             "life": 50
         }
@@ -80,7 +138,16 @@
         "model": "api.matchia",
         "pk": 2,
         "fields": {
-            "ia": 2,
+            "ia": 3,
+            "match": 1,
+            "life": 50
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 3,
+        "fields": {
+            "ia": 1,
             "match": 1,
             "life": 50
         }

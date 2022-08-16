@@ -19,6 +19,9 @@ class Match(models.Model):
         through='MatchIA'
     )
 
+    damage = models.IntegerField(default=8)
+
+
 class MatchIA(models.Model):
     ia = models.ForeignKey(
         'IA',

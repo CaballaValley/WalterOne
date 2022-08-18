@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 
 class Action(models.Model):
@@ -37,6 +39,17 @@ class Defend(Action):
     )
     active = models.BooleanField(default=False)
 
+    ia = models.ForeignKey(
+        'IA',
+        on_delete=models.CASCADE,
+        null=True
+    )
+
+    class Meta:
+        constraints = [
+             models.UniqueConstraint(fields=['ia', 'match'], name='match_ia_defend')
+        ]
+
 
 class Find(Action):
     zone = models.ForeignKey(
@@ -56,9 +69,19 @@ class Move(Action):
         null=True
     )
 
-    def clean(self):
-        last_move = self.ia.move_set.latest('timestamp')
-        is_neighbours = last_move.to_zone.neighbors.filter(id=self.to_zone.id)
-        if not is_neighbours:
-            raise ValidationError(
-                {'to_zone': "this zone is far far from here"})
+    @classmethod
+    def check_neighbours(cls, instance):
+        last_moves = cls.objects.filter(ia=instance.ia, match=instance.match)
+        if last_moves:
+            last_move = last_moves.latest('timestamp')
+            if last_move:
+                is_neighbours = last_move.to_zone.neighbors.filter(
+                    id=instance.to_zone.id)
+                if not is_neighbours:
+                    raise ValidationError(
+                        {'to_zone': f"this zone is far far from here {instance.to_zone.id}"})
+
+
+@receiver(pre_save, sender=Move)
+def signal_check_neighbours(sender, instance, **kwargs):
+    sender.check_neighbours(instance)

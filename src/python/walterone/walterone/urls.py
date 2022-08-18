@@ -19,11 +19,13 @@ from rest_framework import routers
 
 
 from api.admin import admin_site
-from api.views.actions import AttackViewSet
+from api.views.actions import AttackViewSet, DefendViewSet, MoveViewSet
 
 
 router = routers.DefaultRouter()
 router.register(r'attacks', AttackViewSet)
+router.register(r'defends', DefendViewSet)
+router.register(r'moves', MoveViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

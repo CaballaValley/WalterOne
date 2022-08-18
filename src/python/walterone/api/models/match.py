@@ -42,6 +42,11 @@ class MatchIA(models.Model):
              models.UniqueConstraint(fields=['ia', 'match'], name='match_ia')
         ]
 
+    @classmethod
+    def if_ia_in_match(cls, ia_id, match_id):
+        queryset = cls.objects.filter(ia_id=ia_id, match_id=match_id)
+        return queryset.exists()
+
 
 @receiver(post_save, sender=MatchIA)
 def move_ia_to_first_zone(sender, instance, created, **kwargs):

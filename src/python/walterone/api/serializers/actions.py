@@ -1,6 +1,7 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-from api.models.action import Attack, Move, Defend
+from api.models.action import Attack, Defend, Move
+
 
 class AttackSerializer(ModelSerializer):
    class Meta:
@@ -8,11 +9,13 @@ class AttackSerializer(ModelSerializer):
       fields = ['match', 'attack_to', 'attack_from', 'timestamp']
       read_only_fields = ['attack_from', 'timestamp']
 
+
 class MoveSerializer(ModelSerializer):
    class Meta:
       model = Move
       fields = ['match', 'to_zone', 'ia','timestamp']
       read_only_fields = ['ia', 'timestamp']
+
 
 class DefendSerializer(ModelSerializer):
    class Meta:

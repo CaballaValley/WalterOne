@@ -35,6 +35,12 @@ class MatchIA(models.Model):
         on_delete=models.CASCADE
     )
 
+    where_am_i = models.ForeignKey(
+        'Zone',
+        on_delete=models.CASCADE,
+        null=True
+    )
+
     life = models.IntegerField(default=50)
 
     class Meta:

@@ -2,8 +2,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+
 from api.models.action import Attack, Defend, Move
-from api.models.match import Match, MatchIA
+from api.models.match import MatchIA
 from api.serializers.actions import \
     AttackSerializer,\
     DefendSerializer,\

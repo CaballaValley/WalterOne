@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db import transaction
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
@@ -57,6 +58,12 @@ class Find(Action):
         on_delete=models.CASCADE
     )
 
+    ia = models.ForeignKey(
+        'IA',
+        on_delete=models.CASCADE,
+        null=True
+    )
+
 class Move(Action):
     to_zone = models.ForeignKey(
         'Zone', 
@@ -68,6 +75,17 @@ class Move(Action):
         on_delete=models.CASCADE,
         null=True
     )
+
+    active = models.BooleanField(
+        default=True
+    )
+
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            match_ia = self.ia.matchia_set.get(match=self.match)
+            match_ia.where_am_i = self.to_zone
+            match_ia.save()
+            super(Move, self).save(*args, **kwargs)
 
     @classmethod
     def check_neighbours(cls, instance):

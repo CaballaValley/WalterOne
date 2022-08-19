@@ -24,7 +24,7 @@ class Attack(Action):
     attack_from = models.ForeignKey(
         'IA',
         on_delete=models.CASCADE,
-        null=True,
+        null=False,
         related_name="attack_from"
     )
     attack_to = models.ForeignKey(
@@ -34,34 +34,37 @@ class Attack(Action):
         related_name="attack_to"
     )
 
-class Defend(Action):
+class Defend(models.Model):
     shield = models.IntegerField(
         default=4
     )
-    active = models.BooleanField(default=False)
-
-    ia = models.ForeignKey(
-        'IA',
-        on_delete=models.CASCADE,
-        null=True
+    active = models.BooleanField(
+        default=False
     )
-
-    class Meta:
-        constraints = [
-             models.UniqueConstraint(fields=['ia', 'match'], name='match_ia_defend')
-        ]
+ 
+    timestamp = models.TimeField(
+        auto_now=True
+        )
+    
+    match_ia = models.OneToOneField(
+        'MatchIA',
+        on_delete=models.CASCADE,
+        null=False,
+        related_name='defend'
+    )
 
 
 class Find(Action):
     zone = models.ForeignKey(
         'Zone',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=False
     )
 
     ia = models.ForeignKey(
         'IA',
         on_delete=models.CASCADE,
-        null=True
+        null=False
     )
 
 class Move(Action):
@@ -72,8 +75,7 @@ class Move(Action):
 
     ia = models.ForeignKey(
         'IA',
-        on_delete=models.CASCADE,
-        null=True
+        on_delete=models.CASCADE
     )
 
     active = models.BooleanField(

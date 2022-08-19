@@ -25,7 +25,7 @@ from api.views.matches import FindViewSet
 
 router = routers.DefaultRouter()
 router.register(r'attacks', AttackViewSet)
-router.register(r'defends', DefendViewSet)
+router.register(r'defends', DefendViewSet, basename='defend')
 router.register(r'finds', FindViewSet, basename='find')
 router.register(r'moves', MoveViewSet)
 

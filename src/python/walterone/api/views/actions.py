@@ -78,22 +78,23 @@ class MoveViewSet(ModelViewSet):
     
 class DefendViewSet(ModelViewSet):
     serializer_class = DefendSerializer
-    queryset = Defend.objects.all()
 
-    def get_queryset(self):                                          
-        return super().get_queryset().filter(ia=self.request.user.ia)
+    def get_queryset(self):
+        return Defend.objects.all().filter(match_ia__ia=self.request.user.ia)
     
     def create(self, request):
         ia = request.user.ia.id
         active = request.data.get('active', False)
-        match_id = request.data['match']
+        match_ia = request.data['match_ia']
 
-        if not MatchIA.if_ia_in_match(ia, match_id):
+        try:
+            MatchIA.objects.get(id=match_ia, ia=ia)
+        except Exception as e:
             return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
 
         data = {
             'active': active,
-            'match': match_id
+            'match_ia': match_ia
         }
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
@@ -102,6 +103,14 @@ class DefendViewSet(ModelViewSet):
 
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
     
-    def perform_create(self, serializer):
-        ia = self.request.user.ia
-        serializer.save(ia=ia)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.match_ia.ia == request.user.ia and int(request.data['match_ia']) == instance.match_ia.id:
+            serializer = self.get_serializer(instance, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+        
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)

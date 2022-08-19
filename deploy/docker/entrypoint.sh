@@ -13,7 +13,9 @@ fi
 
 cd /usr/src/app
 
-python manage.py flush --no-input
 python manage.py migrate
+python manage.py loaddata fixtures/fixtures.json
+
+celery -A walterone worker -l DEBUG -d
 
 exec "$@"

@@ -28,17 +28,19 @@ class Match(models.Model):
 class MatchIA(models.Model):
     ia = models.ForeignKey(
         'IA',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=False
     )
     match = models.ForeignKey(
         'Match',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=False
     )
 
     where_am_i = models.ForeignKey(
         'Zone',
         on_delete=models.CASCADE,
-        null=True
+        null=False
     )
 
     life = models.IntegerField(default=50)

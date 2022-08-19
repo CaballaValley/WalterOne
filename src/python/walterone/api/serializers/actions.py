@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.serializers import ModelSerializer, BooleanField
 
 from api.models.action import Attack, Defend, Move
 
@@ -18,6 +18,8 @@ class MoveSerializer(ModelSerializer):
 
 
 class DefendSerializer(ModelSerializer):
+   active = BooleanField(required=False)
    class Meta:
       model = Defend
-      fields = ['match', 'active']
+      fields = ['match_ia', 'active', 'id']
+      read_only_fields = ['id']

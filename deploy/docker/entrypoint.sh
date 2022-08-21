@@ -11,11 +11,17 @@ then
     echo "PostgreSQL started"
 fi
 
+while ! nc -z rabbitmq 5672; do
+  sleep 0.1
+done
+
+echo "Rabbitmq started"
+
 cd /usr/src/app
 
 python manage.py migrate
 python manage.py loaddata fixtures/fixtures.json
 
-celery -A walterone worker -l DEBUG -d
+celery -A walterone worker -l DEBUG -D
 
 exec "$@"

@@ -45,6 +45,8 @@ class MatchIA(models.Model):
 
     life = models.IntegerField(default=50)
 
+    alive = models.BooleanField(default=True)
+
     class Meta:
         constraints = [
              models.UniqueConstraint(fields=['ia', 'match'], name='match_ia')

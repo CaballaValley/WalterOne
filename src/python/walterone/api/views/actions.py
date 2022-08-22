@@ -2,13 +2,13 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-
 from api.models.action import Attack, Defend, Move
 from api.models.match import MatchIA
 from api.serializers.actions import \
     AttackSerializer,\
     DefendSerializer,\
     MoveSerializer
+
 
 class AttackViewSet(ModelViewSet):
     serializer_class = AttackSerializer
@@ -27,6 +27,10 @@ class AttackViewSet(ModelViewSet):
 
         if not (MatchIA.if_ia_in_match(attack_from, match_id) and MatchIA.if_ia_in_match(attack_to, match_id)):
             return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not MatchIA.objects.get(match_id=match_id, ia=attack_from).alive or not MatchIA.objects.get(match_id=match_id, ia=attack_to).alive:
+            return Response({"Fail": "someone is dead"}, status=status.HTTP_401_UNAUTHORIZED)
+        
         
         data = {
             'attack_to': attack_to,
@@ -61,6 +65,9 @@ class MoveViewSet(ModelViewSet):
         if not MatchIA.if_ia_in_match(ia, match_id):
             return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
 
+        if not MatchIA.objects.get(match_id=match_id, ia=ia).alive:
+            return Response({"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
+
         data = {
             'to_zone': to_zone,
             'match': match_id
@@ -88,9 +95,12 @@ class DefendViewSet(ModelViewSet):
         match_ia = request.data['match_ia']
 
         try:
-            MatchIA.objects.get(id=match_ia, ia=ia)
+            match_ia_instance = MatchIA.objects.get(id=match_ia, ia=ia)
         except Exception as e:
             return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not match_ia_instance.alive:
+            return Response({"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
 
         data = {
             'active': active,
@@ -106,11 +116,11 @@ class DefendViewSet(ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        if instance.match_ia.ia == request.user.ia and int(request.data['match_ia']) == instance.match_ia.id:
+        if instance.match_ia.ia == request.user.ia and int(request.data['match_ia']) == instance.match_ia.id and instance.match_ia.alive:
             serializer = self.get_serializer(instance, data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
         
             return Response(serializer.data)
         else:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(status=status.HTTP_401_UNAUTHORIZED)

@@ -25,7 +25,7 @@ class AttackViewSet(ModelViewSet):
         if attack_from == attack_to:
             return Response({"Fail": "attacker and attacked are the same"}, status=status.HTTP_400_BAD_REQUEST)
 
-        if not (MatchIA.if_ia_in_match(attack_from, match_id) and MatchIA.if_ia_in_match(attack_to, match_id)):
+        if MatchIA.objects.get(match_id=match_id, ia_id=attack_to).where_am_i != MatchIA.objects.get(match_id=match_id, ia_id=attack_from).where_am_i:
             return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
 
         if not MatchIA.objects.get(match_id=match_id, ia=attack_from).alive or not MatchIA.objects.get(match_id=match_id, ia=attack_to).alive:

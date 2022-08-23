@@ -14,7 +14,7 @@ class FindViewSet(ViewSet):
                 ia_id=self.request.user.ia.id,
                 alive=True
             )
-            ias = MatchIA.objects.filter(
+            match_ias = MatchIA.objects.filter(
                 match_id=match,
                 where_am_i_id=match_ia.where_am_i.id,
                 alive=True
@@ -24,12 +24,12 @@ class FindViewSet(ViewSet):
                 "*"*20,
                 self.request.user.ia,
                 match_ia.where_am_i,
-                [ia.id for ia in ias]
+                [ia.id for ia in match_ias]
             )
         else:
-            ias = MatchIA.objects.none()
+            match_ias = MatchIA.objects.none()
             neighbours_zones = Zone.objects.none()
         return Response({
-            'ias': [ia.id for ia in ias],
+            'ias': [match_ia.ia.id for match_ia in match_ias],
             'neighbours_zones': [zone.id for zone in neighbours_zones]
         })

@@ -46,7 +46,6 @@
             "name": "corbit house",
             "map": 1,
             "neighbors": [
-                1
             ]
         }
     },
@@ -57,8 +56,6 @@
             "name": "undergrounds",
             "map": 1,
             "neighbors": [
-                2,
-                1
             ]
         }
     },

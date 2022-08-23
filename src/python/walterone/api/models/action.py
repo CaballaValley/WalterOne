@@ -6,7 +6,7 @@ from django.dispatch import receiver
 
 
 class Action(models.Model):
-    timestamp = models.TimeField(
+    timestamp = models.DateTimeField(
         auto_now_add=True
         )
     match = models.ForeignKey(
@@ -84,22 +84,22 @@ class Move(Action):
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
-            match_ia = self.ia.matchia_set.get(match=self.match)
+            match_ia = self.ia.matchia_set.get(match_id=self.match.id)
             match_ia.where_am_i = self.to_zone
             match_ia.save()
             super(Move, self).save(*args, **kwargs)
 
     @classmethod
     def check_neighbours(cls, instance):
-        last_moves = cls.objects.filter(ia=instance.ia, match=instance.match)
-        if last_moves:
-            last_move = last_moves.latest('timestamp')
-            if last_move:
-                is_neighbours = last_move.to_zone.neighbors.filter(
-                    id=instance.to_zone.id)
-                if not is_neighbours:
-                    raise ValidationError(
-                        {'to_zone': f"this zone is far far from here {instance.to_zone.id}"})
+        match_ia = instance.ia.matchia_set.get(match_id=instance.match.id)
+        last_zone = match_ia.where_am_i
+        if last_zone and last_zone != instance.to_zone:
+            is_neighbours = last_zone.neighbors.filter(
+                id=instance.to_zone.id
+            )
+            if not is_neighbours:
+                raise ValidationError(
+                    {'to_zone': f"this zone is far far from here {instance.to_zone.id}"})
 
 
 @receiver(pre_save, sender=Move)

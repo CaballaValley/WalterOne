@@ -26,12 +26,12 @@ from api.views.matches import FindViewSet
 router = routers.DefaultRouter()
 router.register(r'attacks', AttackViewSet)
 router.register(r'defends', DefendViewSet, basename='defend')
-router.register(r'finds', FindViewSet, basename='find')
 router.register(r'moves', MoveViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('admin-match-panel/', admin_site.urls),
-    path('api-auth/', include('rest_framework.urls'))
+    path('api-auth/', include('rest_framework.urls')),
+    path('finds/', FindViewSet.as_view({'get': 'retrieve'}))
 ]

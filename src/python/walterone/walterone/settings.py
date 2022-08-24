@@ -151,3 +151,5 @@ CELERY_TIMEZONE = "Europe/Madrid"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_IMPORTS = ["api.tasks"]
+RABBITMQ_HOST = os.environ.get("RABBITMQ_HOST", "rabbitmq")
+CELERY_BROKER_URL = f'amqp://guest:guest@{RABBITMQ_HOST}:5672//'

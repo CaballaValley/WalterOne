@@ -36,7 +36,7 @@
         "fields": {
             "name": "miskatonic university",
             "map": 1,
-            "neighbors": []
+            "neighbors": [2, 3]
         }
     },
     {
@@ -45,8 +45,7 @@
         "fields": {
             "name": "corbit house",
             "map": 1,
-            "neighbors": [
-            ]
+            "neighbors": [1, 3]
         }
     },
     {
@@ -55,8 +54,7 @@
         "fields": {
             "name": "undergrounds",
             "map": 1,
-            "neighbors": [
-            ]
+            "neighbors": [1, 2]
         }
     },
     {

@@ -9,7 +9,7 @@ services:
     volumes:
       - ./src/python/walterone/:/usr/src/app/
     ports:
-      - 8004:8000
+      - ${APP_PORT}:8000
     env_file:
       - ./config/env/.env.dev
     depends_on:

@@ -131,5 +131,7 @@ dmypy.json
 
 # ignore .local configs
 .env.local
+# docker-compose default environment path
+.env
 
 

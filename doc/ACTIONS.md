@@ -27,8 +27,8 @@ Only can attack another IA in your same zone.
 
 ```
 {
-    "damage": 7,
-    "timestamp": 34234234
+    "attack_to": 3,  
+    "match": 5
 }
 ```
 
@@ -83,7 +83,7 @@ If you investigate a zone you can get the information about how many players are
 #### GET
 
 ##### request
-- /ZONE_ID
+- /finds
 
 ##### response:
 - players: list of players in the zone actually
@@ -92,7 +92,7 @@ If you investigate a zone you can get the information about how many players are
 
 ```
 {
-    "players": [PLAYER_ID_1, PLAYER_ID_2,...,PLAYER_ID_N],
+    "ias": [PLAYER_ID_1, PLAYER_ID_2,...,PLAYER_ID_N],
     "neighbours": [ZONE_ID_1, ZONE_ID_2,...,ZONE_ID_N],
     "timestamp": 37452837
 }

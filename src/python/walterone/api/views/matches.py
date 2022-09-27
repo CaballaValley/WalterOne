@@ -1,5 +1,7 @@
+from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+
 
 from api.models.match import MatchIA
 from api.models.zone import Zone
@@ -9,11 +11,14 @@ class FindViewSet(ViewSet):
     def retrieve(self, request):
         match = request.query_params.get('match')
         if match:
-            match_ia = MatchIA.objects.get(
-                match_id=match,
-                ia_id=self.request.user.ia.id,
-                alive=True
-            )
+            try:
+                match_ia = MatchIA.objects.get(
+                    match_id=match,
+                    ia_id=self.request.user.ia.id,
+                    alive=True
+                )
+            except Exception as e:
+                raise PermissionDenied("You are not alive here!!!")
             match_ias = MatchIA.objects.filter(
                 match_id=match,
                 where_am_i_id=match_ia.where_am_i.id,

@@ -19,6 +19,9 @@ RUN pip install psycopg2
 RUN pip install -r requirements.txt
 # copy entrypoint.sh
 COPY ./deploy/docker/entrypoint.sh /walterwhite-entrypoint.sh
+# copy clients
+COPY ./src/python/clients /clients
+
 RUN sed -i 's/\r$//g' /walterwhite-entrypoint.sh
 RUN chmod +x /walterwhite-entrypoint.sh
 

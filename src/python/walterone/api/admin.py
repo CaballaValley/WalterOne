@@ -10,6 +10,14 @@ from .models.zone import Zone
 class WalterOneSite(admin.AdminSite):
     site_header = 'WalterOne Battle administration'
 
+
+class MatchIAAdmin(admin.ModelAdmin):
+
+    list_display = [
+        "ia_name", "match_info", "zone_name", "life", "alive"
+    ]
+
+
 admin_site = WalterOneSite(name='watcher')
 admin_site.register(Attack)
 admin_site.register(Defend)
@@ -18,5 +26,5 @@ admin_site.register(Move)
 admin_site.register(IA)
 admin_site.register(Map)
 admin_site.register(Match)
-admin_site.register(MatchIA)
+admin_site.register(MatchIA, MatchIAAdmin)
 admin_site.register(Zone)

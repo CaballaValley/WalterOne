@@ -47,6 +47,15 @@ class MatchIA(models.Model):
 
     alive = models.BooleanField(default=True)
 
+    def match_info(self):
+        return f"{self.match.name} ({self.match.id})"
+
+    def ia_name(self):
+        return self.ia.name
+
+    def zone_name(self):
+        return self.where_am_i.name
+
     class Meta:
         constraints = [
              models.UniqueConstraint(fields=['ia', 'match'], name='match_ia')

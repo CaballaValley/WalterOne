@@ -18,6 +18,24 @@ docker-compose build && docker-compose up
 ```
 
 ## Locally
-```
+```commandline
 ./deploy/local/startup_local.sh
+```
+
+
+# Run Jonny Walker client 🏇
+
+## With docker
+
+Execute a bash inside container:
+```commandline
+docker exec -it walterone_web_1 bash
+```
+Run client script:
+```commandline
+
+```
+## Locally
+```commandline
+
 ```

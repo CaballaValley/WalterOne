@@ -5,7 +5,6 @@ from time import sleep
 import requests
 
 
-
 walterone_host = getenv("WALTERONE_HOST", "http://localhost:8000")
 walterone_username = getenv("WALTERONE_USERNAME", "randolphcarter")
 walterone_password = getenv("WALTERONE_PASSWORD", "RandomPassword")
@@ -42,8 +41,10 @@ def move_to_zone():
     print(response.json())
     return response.status_code
 
-while move_to_zone() == 201:
-    sleep(5)
+
+if __name__ == "__main__":
+    while move_to_zone() == 201:
+        sleep(5)
     
 
 

@@ -23,14 +23,18 @@ def attack(ias):
         "attack_to": choice(ias)
     }
     response = requests.post(attack_endpoint, auth=auth, data=data)
+    response.raise_for_status()
     print(response.json())
+
 
 def find_zone():
     response_find = requests.get(find_endpoint, auth=auth)
+    response_find.raise_for_status()
     find_data = response_find.json()
     attack(find_data['ias'])
     print(find_data)
     return find_data['neighbours_zones']
+
 
 def move_to_zone():
     data = {
@@ -38,6 +42,7 @@ def move_to_zone():
         "to_zone": choice(find_zone())
     }
     response = requests.post(move_endpoint, auth=auth, data=data)
+    response.raise_for_status()
     print(response.json())
     return response.status_code
 

@@ -43,7 +43,7 @@ class MatchIA(models.Model):
         null=False
     )
 
-    life = models.IntegerField(default=50)
+    life = models.IntegerField(default=200)
 
     alive = models.BooleanField(default=True)
 

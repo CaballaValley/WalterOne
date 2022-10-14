@@ -17,6 +17,7 @@ class Action(models.Model):
     class Meta:
         abstract = True
 
+
 class Attack(Action):
     damage = models.IntegerField(
         default=10
@@ -34,6 +35,7 @@ class Attack(Action):
         related_name="attack_to"
     )
 
+
 class Defend(models.Model):
     shield = models.IntegerField(
         default=4
@@ -41,11 +43,11 @@ class Defend(models.Model):
     active = models.BooleanField(
         default=False
     )
- 
+
     timestamp = models.TimeField(
         auto_now=True
         )
-    
+
     match_ia = models.OneToOneField(
         'MatchIA',
         on_delete=models.CASCADE,
@@ -67,9 +69,10 @@ class Find(Action):
         null=False
     )
 
+
 class Move(Action):
     to_zone = models.ForeignKey(
-        'Zone', 
+        'Zone',
         on_delete=models.CASCADE
     )
 

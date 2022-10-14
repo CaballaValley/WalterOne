@@ -7,9 +7,12 @@ class IA(models.Model):
         User,
         on_delete=models.CASCADE
     )
-    
+
     name = models.CharField(
         null=False,
         blank=False,
         max_length=32
     )
+
+    def __str__(self):
+        return f"{self.name}"

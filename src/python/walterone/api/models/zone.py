@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 
 class Zone(models.Model):
     name = models.CharField(
@@ -19,3 +18,6 @@ class Zone(models.Model):
         on_delete=models.CASCADE,
         null=False
     )
+
+    def __str__(self):
+        return f"{self.name}: {self.map}"

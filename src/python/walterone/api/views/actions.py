@@ -15,8 +15,8 @@ class AttackViewSet(ModelViewSet):
     queryset = Attack.objects.all()
 
     def get_queryset(self):                                          
-        return super().get_queryset().filter(attack_from=self.request.user.ia) 
-    
+        return super().get_queryset().filter(attack_from=self.request.user.ia)
+
     def create(self, request):
         attack_from = request.user.ia.id
         attack_to = request.data['attack_to']
@@ -30,11 +30,10 @@ class AttackViewSet(ModelViewSet):
 
         if not MatchIA.objects.get(match_id=match_id, ia=attack_from).alive or not MatchIA.objects.get(match_id=match_id, ia=attack_to).alive:
             return Response({"Fail": "someone is dead"}, status=status.HTTP_401_UNAUTHORIZED)
-        
-        
+
         data = {
             'attack_to': attack_to,
-            'match': match_id,            
+            'match': match_id,
         }
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
@@ -44,7 +43,7 @@ class AttackViewSet(ModelViewSet):
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
-        damage =  serializer.validated_data['match'].damage
+        damage = serializer.validated_data['match'].damage
         attack_from = self.request.user.ia
         serializer.save(damage=damage, attack_from=attack_from)
 
@@ -52,11 +51,10 @@ class AttackViewSet(ModelViewSet):
 class MoveViewSet(ModelViewSet):
     serializer_class = MoveSerializer
     queryset = Move.objects.all()
-    
 
-    def get_queryset(self):                                          
+    def get_queryset(self):
         return super().get_queryset().filter(ia=self.request.user.ia)
-    
+
     def create(self, request):
         ia = request.user.ia.id
         to_zone = request.data['to_zone']
@@ -82,13 +80,14 @@ class MoveViewSet(ModelViewSet):
     def perform_create(self, serializer):
         ia = self.request.user.ia
         serializer.save(ia=ia)
-    
+
+
 class DefendViewSet(ModelViewSet):
     serializer_class = DefendSerializer
 
     def get_queryset(self):
         return Defend.objects.all().filter(match_ia__ia=self.request.user.ia)
-    
+
     def create(self, request):
         ia = request.user.ia.id
         active = request.data.get('active', False)
@@ -112,7 +111,6 @@ class DefendViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
-    
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -120,7 +118,7 @@ class DefendViewSet(ModelViewSet):
             serializer = self.get_serializer(instance, data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
-        
+
             return Response(serializer.data)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)

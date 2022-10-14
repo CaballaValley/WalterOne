@@ -5,11 +5,10 @@ from time import sleep
 import requests
 
 
-
 walterone_host = getenv("WALTERONE_HOST", "http://localhost:8000")
 walterone_username = getenv("WALTERONE_USERNAME", "randolphcarter")
 walterone_password = getenv("WALTERONE_PASSWORD", "RandomPassword")
-walterone_match = getenv("WALTERONE_MATCH", "1")
+walterone_match = getenv("WALTERONE_MATCH", "2")
 
 auth = (walterone_username, walterone_password)
 
@@ -19,12 +18,16 @@ attack_endpoint = f"{walterone_host}/attacks/"
 
 
 def attack(ias):
-    data = {
-        "match": walterone_match,
-        "attack_to": choice(ias)
-    }
-    response = requests.post(attack_endpoint, auth=auth, data=data)
-    print(response.json())
+    if ias:
+        data = {
+            "match": walterone_match,
+            "attack_to": choice(ias)
+        }
+        response = requests.post(attack_endpoint, auth=auth, data=data)
+        if response.status_code == 400:
+            print(response.content)
+        print(response.json())
+
 
 def find_zone():
     response_find = requests.get(find_endpoint, auth=auth)
@@ -32,6 +35,7 @@ def find_zone():
     attack(find_data['ias'])
     print(find_data)
     return find_data['neighbours_zones']
+
 
 def move_to_zone():
     data = {
@@ -42,8 +46,6 @@ def move_to_zone():
     print(response.json())
     return response.status_code
 
+
 while move_to_zone() == 201:
-    sleep(5)
-    
-
-
+    sleep(3)

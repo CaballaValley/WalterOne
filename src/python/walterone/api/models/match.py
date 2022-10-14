@@ -24,6 +24,9 @@ class Match(models.Model):
 
     damage = models.IntegerField(default=8)
 
+    def __str__(self):
+        return f"{self.name}: {self.map.name}"
+
 
 class MatchIA(models.Model):
     ia = models.ForeignKey(
@@ -46,6 +49,9 @@ class MatchIA(models.Model):
     life = models.IntegerField(default=200)
 
     alive = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.match}: {self.ia} ({self.life})"
 
     class Meta:
         constraints = [

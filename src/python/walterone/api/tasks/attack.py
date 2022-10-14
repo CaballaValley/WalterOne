@@ -6,8 +6,10 @@ from api.models.action import Defend
 from api.models.match import MatchIA
 from walterone.celery import app
 
+
 def get_range_value(percentage, top_value):
     return randint(top_value-int(top_value*percentage/100), top_value)
+
 
 @app.task(bind=True)
 def attack_task(self, attacked_ia_id, match_id, damage):

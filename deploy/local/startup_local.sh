@@ -8,5 +8,5 @@ fi
 cd src/python/walterone
 
 python manage.py migrate
-# python manage.py loaddata fixtures/fixtures.json
+python manage.py loaddata fixtures/fixtures.json
 python manage.py runserver

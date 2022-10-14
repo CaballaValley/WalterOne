@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os
+from os import getenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "fooABCDEF")
+SECRET_KEY = getenv("SECRET_KEY", "fooABCDEF")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'walterone.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "ENGINE": getenv("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": getenv("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+        "USER": getenv("SQL_USER", "user"),
+        "PASSWORD": getenv("SQL_PASSWORD", "password"),
+        "HOST": getenv("SQL_HOST", "localhost"),
+        "PORT": getenv("SQL_PORT", "5432"),
         "ATOMIC_REQUESTS": True
     }
 }
@@ -151,9 +151,12 @@ CELERY_TIMEZONE = "Europe/Madrid"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_IMPORTS = ["api.tasks"]
-RABBITMQ_HOST = os.environ.get("RABBITMQ_HOST", "rabbitmq")
+RABBITMQ_HOST = getenv("RABBITMQ_HOST", "rabbitmq")
 CELERY_BROKER_URL = f'amqp://guest:guest@{RABBITMQ_HOST}:5672//'
 
 
-DAMAGE_RANGE_PERCENTAGE = os.getenv("DAMAGE_RANGE_PERCENTAGE", 40)
-DEFEND_RANGE_PERCENTAGE = os.getenv("DAMAGE_RANGE_PERCENTAGE", 25)
+DAMAGE_RANGE_PERCENTAGE = getenv("DAMAGE_RANGE_PERCENTAGE", 40)
+DEFEND_RANGE_PERCENTAGE = getenv("DAMAGE_RANGE_PERCENTAGE", 25)
+
+
+MOVE_DELAY = getenv("MOVE_DELAY", 2)

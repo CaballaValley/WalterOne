@@ -40,7 +40,12 @@ class FindViewSet(ViewSet):
             if match_ia.ia.id != self.request.user.ia.id and match_ia.alive:
                 ias.append(match_ia.ia.id)
 
+        neighbours_zones_ids = []
+        for zone in neighbours_zones:
+            if zone.enable:
+                neighbours_zones_ids.append(zone.id)
+
         return Response({
             'ias': ias,
-            'neighbours_zones': [zone.id for zone in neighbours_zones]
+            'neighbours_zones': neighbours_zones_ids
         })

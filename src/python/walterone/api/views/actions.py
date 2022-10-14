@@ -1,9 +1,13 @@
+from time import sleep
+
+from django.conf import settings
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from api.models.action import Attack, Defend, Move
 from api.models.match import MatchIA
+from api.models.zone import Zone
 from api.serializers.actions import \
     AttackSerializer,\
     DefendSerializer,\
@@ -56,6 +60,7 @@ class MoveViewSet(ModelViewSet):
         return super().get_queryset().filter(ia=self.request.user.ia)
 
     def create(self, request):
+        sleep(settings.MOVE_DELAY)
         ia = request.user.ia.id
         to_zone = request.data['to_zone']
         match_id = request.data['match']
@@ -65,6 +70,9 @@ class MoveViewSet(ModelViewSet):
 
         if not MatchIA.objects.get(match_id=match_id, ia=ia).alive:
             return Response({"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if not Zone.objects.get(id=to_zone).enable:
+            return Response({"Fail": "this zone is disable"}, status=status.HTTP_401_UNAUTHORIZED)
 
         data = {
             'to_zone': to_zone,

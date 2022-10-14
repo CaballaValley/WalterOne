@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 
 
@@ -19,5 +20,9 @@ class Zone(models.Model):
         null=False
     )
 
+    enable = models.BooleanField(
+        default=True
+    )
+
     def __str__(self):
-        return f"{self.name}: {self.map}"
+        return f"{self.name}({self.enable}): {self.map}"

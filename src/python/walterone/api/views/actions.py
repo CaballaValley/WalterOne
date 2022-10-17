@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from api.event_triggers import go_ryu, karin_gift, set_lucky_unlucky
 from api.models.action import Attack, Defend, Move
 from api.models.match import MatchIA
 from api.models.zone import Zone
@@ -18,21 +19,24 @@ class AttackViewSet(ModelViewSet):
     serializer_class = AttackSerializer
     queryset = Attack.objects.all()
 
-    def get_queryset(self):                                          
+    def get_queryset(self):
         return super().get_queryset().filter(attack_from=self.request.user.ia)
 
     def create(self, request):
         attack_from = request.user.ia.id
-        attack_to = request.data['attack_to']
+        attack_to = int(request.data['attack_to'])
         match_id = request.data['match']
 
         if attack_from == attack_to:
             return Response({"Fail": "attacker and attacked are the same"}, status=status.HTTP_400_BAD_REQUEST)
 
-        if MatchIA.objects.get(match_id=match_id, ia_id=attack_to).where_am_i != MatchIA.objects.get(match_id=match_id, ia_id=attack_from).where_am_i:
+        attacker = MatchIA.objects.get(match_id=match_id, ia=attack_from)
+        attacked = MatchIA.objects.get(match_id=match_id, ia_id=attack_to)
+
+        if attacked.where_am_i != attacker.where_am_i:
             return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
 
-        if not MatchIA.objects.get(match_id=match_id, ia=attack_from).alive or not MatchIA.objects.get(match_id=match_id, ia=attack_to).alive:
+        if not attacker.alive or not attacked.alive:
             return Response({"Fail": "someone is dead"}, status=status.HTTP_401_UNAUTHORIZED)
 
         data = {
@@ -44,6 +48,17 @@ class AttackViewSet(ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
+        sleep(settings.ATTACK_DELAY)
+        data['status_info'] = {
+            attack_from: {
+                'lucky_unlucky': attacked.lucky_unlucky,
+                # 'go_ryu': attacked.go_ryu
+            },
+            attack_to: {
+                'lucky_unlucky': attacker.lucky_unlucky,
+                # 'go_ryu': attacker.go_ryu
+            }
+        }
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
@@ -68,15 +83,23 @@ class MoveViewSet(ModelViewSet):
         if not MatchIA.if_ia_in_match(ia, match_id):
             return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
 
-        if not MatchIA.objects.get(match_id=match_id, ia=ia).alive:
+        match_ia_instance = MatchIA.objects.get(match_id=match_id, ia=ia)
+
+        if not match_ia_instance.alive:
             return Response({"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        if not Zone.objects.get(id=to_zone).enable:
+        zone_instance = Zone.objects.get(id=to_zone)
+        if not zone_instance.enable:
             return Response({"Fail": "this zone is disable"}, status=status.HTTP_401_UNAUTHORIZED)
 
         data = {
             'to_zone': to_zone,
-            'match': match_id
+            'match': match_id,
+            'triggers': {
+                'lucky_unlucky': zone_instance.lucky_unlucky,
+                # 'go_ryu': zone_instance.go_ryu,
+                # 'karin_gift': zone_instance.karin_gift
+            }
         }
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)

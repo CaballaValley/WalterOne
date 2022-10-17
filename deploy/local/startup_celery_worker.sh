@@ -7,4 +7,4 @@ fi
 
 cd src/python/walterone
 
-celery -A walterone worker -l DEBUG
+celery -A walterone worker -l DEBUG --concurrency 1

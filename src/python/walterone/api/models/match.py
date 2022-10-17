@@ -1,3 +1,4 @@
+from email.policy import default
 from random import choice
 from django.db import models
 from django.db.models.signals import post_save
@@ -49,6 +50,13 @@ class MatchIA(models.Model):
     life = models.IntegerField(default=200)
 
     alive = models.BooleanField(default=True)
+
+    lucky_unlucky = models.IntegerField(
+        default=0
+    )
+
+    # go_ryu = models.IntegerField(default=0)
+
 
     def __str__(self):
         return f"{self.match}: {self.ia} ({self.life})"

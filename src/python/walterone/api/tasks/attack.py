@@ -2,7 +2,7 @@ from random import randint
 
 from django.conf import settings
 
-from api.event_triggers import attacked_lucky_unlucky, attacking_lucky_unlucky
+from api.event_triggers import attacked_lucky_unlucky, attacking_lucky_unlucky, go_ryu
 from api.models.action import Defend
 from api.models.match import MatchIA
 from walterone.celery import app
@@ -12,7 +12,7 @@ def get_range_value(percentage, top_value):
     return randint(top_value-int(top_value*percentage/100), top_value)
 
 
-def get_defend_value(match_ia):
+def get_defend_value(match_ia, damage):
     if Defend.objects.filter(match_ia=match_ia) and match_ia.defend.active:
         defend_value = get_range_value(
             settings.DEFEND_RANGE_PERCENTAGE,
@@ -20,11 +20,39 @@ def get_defend_value(match_ia):
     else:
         defend_value = 0
 
+    if match_ia.go_ryu > 0:
+        match_ia.go_ryu -= 1
+        defend_value += go_ryu(damage)
+    
+
     return defend_value
 
 
-def calculate_damage(attacker_ia_id, match_id, reduced, damage):
+def get_attacker_damage(match_ia, damage):
+    if Defend.objects.filter(match_ia=match_ia) and match_ia.defend.active:
+        defend_value = get_range_value(
+            settings.DEFEND_RANGE_PERCENTAGE,
+            match_ia.defend.shield)
+    else:
+        defend_value = 0
+
+    if match_ia.go_ryu > 0:
+        match_ia.go_ryu -= 1
+        match_ia.save()
+        damage = go_ryu(damage)
+
+    return damage - defend_value
+
+
+@app.task(bind=True)
+def attack_task(self, attacker_ia_id, attacked_ia_id, match_id, damage):
+    match_ia_attacked = MatchIA.objects.get(ia=attacked_ia_id, match=match_id)
     match_ia_attacker = MatchIA.objects.get(ia=attacker_ia_id, match=match_id)
+
+    is_lucky = False
+    if match_ia_attacked.lucky_unlucky > 0:
+        is_lucky = attacked_lucky_unlucky()
+        match_ia_attacked.lucky_unlucky -= 1
 
     is_unlucky = False
     if match_ia_attacker.lucky_unlucky > 0:
@@ -32,32 +60,12 @@ def calculate_damage(attacker_ia_id, match_id, reduced, damage):
         match_ia_attacker.lucky_unlucky -= 1
         match_ia_attacker.save()
 
-    calculated_damage = 0
-    if not is_unlucky:
-        damage_reduced = get_defend_value(match_ia_attacker)
+    if not is_lucky or not is_unlucky:
+        reduced = get_defend_value(match_ia_attacked, damage)
+        induced = get_attacker_damage(match_ia_attacker, damage)
 
-        damage_range_result = get_range_value(
-                settings.DAMAGE_RANGE_PERCENTAGE,
-                damage-damage_reduced)
-
-        calculated_damage = damage_range_result + reduced
-
-    return calculated_damage
-
-
-@app.task(bind=True)
-def attack_task(self, attacker_ia_id, attacked_ia_id, match_id, damage):
-    match_ia_attacked = MatchIA.objects.get(ia=attacked_ia_id, match=match_id)
-
-    is_lucky = False
-    if match_ia_attacked.lucky_unlucky > 0:
-        is_lucky = attacked_lucky_unlucky()
-        match_ia_attacked.lucky_unlucky -= 1
-
-    if not is_lucky:
-        reduced = get_defend_value(match_ia_attacked)
-        match_ia_attacked.life -= calculate_damage(
-            attacker_ia_id, match_id, reduced, damage)
+        final_damage = induced - reduced
+        match_ia_attacked.life -= final_damage if final_damage > 0 else 0
 
     match_ia_attacked.alive = match_ia_attacked.life >= 0
 

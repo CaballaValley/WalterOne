@@ -48,4 +48,5 @@ def move_to_zone():
 
 
 while move_to_zone() == 201:
-    sleep(3)
+    # sleep(3)
+    pass

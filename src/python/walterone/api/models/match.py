@@ -55,8 +55,7 @@ class MatchIA(models.Model):
         default=0
     )
 
-    # go_ryu = models.IntegerField(default=0)
-
+    go_ryu = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.match}: {self.ia} ({self.life})"

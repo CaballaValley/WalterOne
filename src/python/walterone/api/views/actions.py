@@ -1,3 +1,4 @@
+from asyncio.log import logger
 from time import sleep
 
 from django.conf import settings
@@ -5,7 +6,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from api.event_triggers import go_ryu, karin_gift, set_lucky_unlucky
 from api.models.action import Attack, Defend, Move
 from api.models.match import MatchIA
 from api.models.zone import Zone
@@ -28,16 +28,21 @@ class AttackViewSet(ModelViewSet):
         match_id = request.data['match']
 
         if attack_from == attack_to:
-            return Response({"Fail": "attacker and attacked are the same"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"Fail": "attacker and attacked are the same"},
+                status=status.HTTP_400_BAD_REQUEST)
 
         attacker = MatchIA.objects.get(match_id=match_id, ia=attack_from)
         attacked = MatchIA.objects.get(match_id=match_id, ia_id=attack_to)
 
         if attacked.where_am_i != attacker.where_am_i:
-            return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
 
         if not attacker.alive or not attacked.alive:
-            return Response({"Fail": "someone is dead"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"Fail": "someone is dead"},
+                status=status.HTTP_401_UNAUTHORIZED)
 
         data = {
             'attack_to': attack_to,
@@ -81,24 +86,28 @@ class MoveViewSet(ModelViewSet):
         match_id = request.data['match']
 
         if not MatchIA.if_ia_in_match(ia, match_id):
-            return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
 
         match_ia_instance = MatchIA.objects.get(match_id=match_id, ia=ia)
 
         if not match_ia_instance.alive:
-            return Response({"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
 
         zone_instance = Zone.objects.get(id=to_zone)
         if not zone_instance.enable:
-            return Response({"Fail": "this zone is disable"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"Fail": "this zone is disable"},
+                status=status.HTTP_401_UNAUTHORIZED)
 
         data = {
             'to_zone': to_zone,
             'match': match_id,
             'triggers': {
                 'lucky_unlucky': zone_instance.lucky_unlucky,
-                # 'go_ryu': zone_instance.go_ryu,
-                # 'karin_gift': zone_instance.karin_gift
+                'go_ryu': zone_instance.go_ryu,
+                'karin_gift': zone_instance.karin_gift
             }
         }
         serializer = self.get_serializer(data=data)
@@ -127,10 +136,13 @@ class DefendViewSet(ModelViewSet):
         try:
             match_ia_instance = MatchIA.objects.get(id=match_ia, ia=ia)
         except Exception as e:
-            return Response({"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
+            logger.error(e)
+            return Response(
+                {"Fail": "wrong ia-match"}, status=status.HTTP_400_BAD_REQUEST)
 
         if not match_ia_instance.alive:
-            return Response({"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
 
         data = {
             'active': active,
@@ -145,7 +157,9 @@ class DefendViewSet(ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        if instance.match_ia.ia == request.user.ia and int(request.data['match_ia']) == instance.match_ia.id and instance.match_ia.alive:
+        if instance.match_ia.ia == request.user.ia and\
+           int(request.data['match_ia']) == instance.match_ia.id and\
+           instance.match_ia.alive:
             serializer = self.get_serializer(instance, data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)

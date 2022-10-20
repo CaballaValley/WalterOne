@@ -43,15 +43,32 @@ def attacking_lucky_unlucky():
     return unlucky_value
 
 
-def go_ryu():
+def set_go_ryu(match_ia_id):
     """
     The IA increase the damage between 40-50% 
     and increase the damage received between 40-50%
     """
-    pass
+    match_ia_instance = MatchIA.objects.get(id=match_ia_id)
+    match_ia_instance.go_ryu = settings.GO_RYU_DEFAULT
+    match_ia_instance.save()
 
-def karin_gift():
+
+def go_ryu(damage):
+    """
+    The IA increase the damage between 40-50% 
+    and increase the damage received between 40-50%
+    """
+
+    percentage = randint(40, 50)
+    return damage+int(damage*(percentage/100))
+
+
+def set_karin_gift(match_ia_id):
     """
     The Ia recover a 20-30% of life lost
     """
-    pass
+
+    percentage = randint(20, 30)
+    match_ia_instance = MatchIA.objects.get(id=match_ia_id)
+    match_ia_instance.life += int(settings.LIFE_DEFAULT*(percentage/100))
+    match_ia_instance.save()

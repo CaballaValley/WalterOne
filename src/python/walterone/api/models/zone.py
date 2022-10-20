@@ -27,9 +27,9 @@ class Zone(models.Model):
         default=False
     )
 
-    # go_ryu = models.BooleanField(default=False)
+    go_ryu = models.BooleanField(default=False)
 
-    # karin_gift = models.BooleanField(default=False)
+    karin_gift = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name}({self.enable}): {self.map}"

@@ -14,7 +14,7 @@ class FindViewSet(ViewSet):
         match = request.query_params.get('match')
         if match:
             try:
-                match_ia = MatchIA.objects.get(
+                self_match_ia = MatchIA.objects.get(
                     match_id=match,
                     ia_id=self.request.user.ia.id,
                     alive=True
@@ -24,14 +24,14 @@ class FindViewSet(ViewSet):
                 raise PermissionDenied("You are not alive here!!!")
             match_ias = MatchIA.objects.filter(
                 match_id=match,
-                where_am_i_id=match_ia.where_am_i.id,
+                where_am_i_id=self_match_ia.where_am_i.id,
                 alive=True
             )
-            neighbours_zones = match_ia.where_am_i.neighbors.all()
+            neighbours_zones = self_match_ia.where_am_i.neighbors.all()
             logging.info(
                 "*"*20,
                 self.request.user.ia,
-                match_ia.where_am_i,
+                self_match_ia.where_am_i,
                 [ia.id for ia in match_ias]
             )
         else:
@@ -50,5 +50,11 @@ class FindViewSet(ViewSet):
 
         return Response({
             'ias': ias,
-            'neighbours_zones': neighbours_zones_ids
+            'neighbours_zones': neighbours_zones_ids,
+            'triggers': {
+                'lucky_unlucky': match_ia.where_am_i.lucky_unlucky,
+                'go_ryu': match_ia.where_am_i.go_ryu,
+                'karin_gift': match_ia.where_am_i.karin_gift
+            },
+            'life': self_match_ia.life,
         })

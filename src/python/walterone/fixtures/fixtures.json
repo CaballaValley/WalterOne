@@ -1,123 +1,542 @@
 [
     {
-        "model": "api.ia",
+        "model": "auth.permission",
         "pk": 1,
         "fields": {
-            "user": 1,
-            "name": "ewokcillo"
+            "name": "Can add log entry",
+            "content_type": 1,
+            "codename": "add_logentry"
         }
     },
     {
-        "model": "api.ia",
+        "model": "auth.permission",
         "pk": 2,
         "fields": {
-            "user": 2,
-            "name": "randolphcarter"
+            "name": "Can change log entry",
+            "content_type": 1,
+            "codename": "change_logentry"
         }
     },
     {
-        "model": "api.ia",
+        "model": "auth.permission",
         "pk": 3,
         "fields": {
-            "user": 3,
-            "name": "CharlesDexterWard"
+            "name": "Can delete log entry",
+            "content_type": 1,
+            "codename": "delete_logentry"
         }
     },
     {
-        "model": "api.map",
-        "pk": 1,
-        "fields": {
-            "name": "arkham"
-        }
-    },
-    {
-        "model": "api.zone",
-        "pk": 1,
-        "fields": {
-            "name": "miskatonic university",
-            "map": 1,
-            "neighbors": [2]
-        }
-    },
-    {
-        "model": "api.zone",
-        "pk": 2,
-        "fields": {
-            "name": "corbit house",
-            "map": 1,
-            "neighbors": [
-                1,
-                3
-            ]
-        }
-    },
-    {
-        "model": "api.zone",
-        "pk": 3,
-        "fields": {
-            "name": "undergrounds",
-            "map": 1,
-            "neighbors": [
-                2
-            ]
-        }
-    },
-    {
-        "model": "api.match",
-        "pk": 1,
-        "fields": {
-            "name": "Awakening",
-            "map": 1,
-            "damage": 8
-        }
-    },
-    {
-        "model": "api.match",
-        "pk": 2,
-        "fields": {
-            "name": "world war z",
-            "map": 1,
-            "damage": 2
-        }
-    },
-    {
-        "model": "api.matchia",
-        "pk": 1,
-        "fields": {
-            "ia": 1,
-            "match": 1,
-            "where_am_i": 2,
-            "life": 38
-        }
-    },
-    {
-        "model": "api.matchia",
-        "pk": 2,
-        "fields": {
-            "ia": 2,
-            "match": 1,
-            "where_am_i": 3,
-            "life": 40
-        }
-    },
-    {
-        "model": "api.matchia",
-        "pk": 3,
-        "fields": {
-            "ia": 3,
-            "match": 2,
-            "where_am_i": 3,
-            "life": 50
-        }
-    },
-    {
-        "model": "api.matchia",
+        "model": "auth.permission",
         "pk": 4,
         "fields": {
-            "ia": 1,
-            "match": 2,
-            "where_am_i": 2,
-            "life": 50
+            "name": "Can view log entry",
+            "content_type": 1,
+            "codename": "view_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 5,
+        "fields": {
+            "name": "Can add permission",
+            "content_type": 2,
+            "codename": "add_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 6,
+        "fields": {
+            "name": "Can change permission",
+            "content_type": 2,
+            "codename": "change_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 7,
+        "fields": {
+            "name": "Can delete permission",
+            "content_type": 2,
+            "codename": "delete_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 8,
+        "fields": {
+            "name": "Can view permission",
+            "content_type": 2,
+            "codename": "view_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 9,
+        "fields": {
+            "name": "Can add group",
+            "content_type": 3,
+            "codename": "add_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 10,
+        "fields": {
+            "name": "Can change group",
+            "content_type": 3,
+            "codename": "change_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 11,
+        "fields": {
+            "name": "Can delete group",
+            "content_type": 3,
+            "codename": "delete_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 12,
+        "fields": {
+            "name": "Can view group",
+            "content_type": 3,
+            "codename": "view_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 13,
+        "fields": {
+            "name": "Can add user",
+            "content_type": 4,
+            "codename": "add_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 14,
+        "fields": {
+            "name": "Can change user",
+            "content_type": 4,
+            "codename": "change_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 15,
+        "fields": {
+            "name": "Can delete user",
+            "content_type": 4,
+            "codename": "delete_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 16,
+        "fields": {
+            "name": "Can view user",
+            "content_type": 4,
+            "codename": "view_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 17,
+        "fields": {
+            "name": "Can add content type",
+            "content_type": 5,
+            "codename": "add_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 18,
+        "fields": {
+            "name": "Can change content type",
+            "content_type": 5,
+            "codename": "change_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 19,
+        "fields": {
+            "name": "Can delete content type",
+            "content_type": 5,
+            "codename": "delete_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 20,
+        "fields": {
+            "name": "Can view content type",
+            "content_type": 5,
+            "codename": "view_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 21,
+        "fields": {
+            "name": "Can add session",
+            "content_type": 6,
+            "codename": "add_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 22,
+        "fields": {
+            "name": "Can change session",
+            "content_type": 6,
+            "codename": "change_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 23,
+        "fields": {
+            "name": "Can delete session",
+            "content_type": 6,
+            "codename": "delete_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 24,
+        "fields": {
+            "name": "Can view session",
+            "content_type": 6,
+            "codename": "view_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 25,
+        "fields": {
+            "name": "Can add ia",
+            "content_type": 7,
+            "codename": "add_ia"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 26,
+        "fields": {
+            "name": "Can change ia",
+            "content_type": 7,
+            "codename": "change_ia"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 27,
+        "fields": {
+            "name": "Can delete ia",
+            "content_type": 7,
+            "codename": "delete_ia"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 28,
+        "fields": {
+            "name": "Can view ia",
+            "content_type": 7,
+            "codename": "view_ia"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 29,
+        "fields": {
+            "name": "Can add map",
+            "content_type": 8,
+            "codename": "add_map"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 30,
+        "fields": {
+            "name": "Can change map",
+            "content_type": 8,
+            "codename": "change_map"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 31,
+        "fields": {
+            "name": "Can delete map",
+            "content_type": 8,
+            "codename": "delete_map"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 32,
+        "fields": {
+            "name": "Can view map",
+            "content_type": 8,
+            "codename": "view_map"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 33,
+        "fields": {
+            "name": "Can add match",
+            "content_type": 9,
+            "codename": "add_match"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 34,
+        "fields": {
+            "name": "Can change match",
+            "content_type": 9,
+            "codename": "change_match"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 35,
+        "fields": {
+            "name": "Can delete match",
+            "content_type": 9,
+            "codename": "delete_match"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 36,
+        "fields": {
+            "name": "Can view match",
+            "content_type": 9,
+            "codename": "view_match"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 37,
+        "fields": {
+            "name": "Can add zone",
+            "content_type": 10,
+            "codename": "add_zone"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 38,
+        "fields": {
+            "name": "Can change zone",
+            "content_type": 10,
+            "codename": "change_zone"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 39,
+        "fields": {
+            "name": "Can delete zone",
+            "content_type": 10,
+            "codename": "delete_zone"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 40,
+        "fields": {
+            "name": "Can view zone",
+            "content_type": 10,
+            "codename": "view_zone"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 41,
+        "fields": {
+            "name": "Can add move",
+            "content_type": 11,
+            "codename": "add_move"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 42,
+        "fields": {
+            "name": "Can change move",
+            "content_type": 11,
+            "codename": "change_move"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 43,
+        "fields": {
+            "name": "Can delete move",
+            "content_type": 11,
+            "codename": "delete_move"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 44,
+        "fields": {
+            "name": "Can view move",
+            "content_type": 11,
+            "codename": "view_move"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 45,
+        "fields": {
+            "name": "Can add match ia",
+            "content_type": 12,
+            "codename": "add_matchia"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 46,
+        "fields": {
+            "name": "Can change match ia",
+            "content_type": 12,
+            "codename": "change_matchia"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 47,
+        "fields": {
+            "name": "Can delete match ia",
+            "content_type": 12,
+            "codename": "delete_matchia"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 48,
+        "fields": {
+            "name": "Can view match ia",
+            "content_type": 12,
+            "codename": "view_matchia"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 49,
+        "fields": {
+            "name": "Can add find",
+            "content_type": 13,
+            "codename": "add_find"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 50,
+        "fields": {
+            "name": "Can change find",
+            "content_type": 13,
+            "codename": "change_find"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 51,
+        "fields": {
+            "name": "Can delete find",
+            "content_type": 13,
+            "codename": "delete_find"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 52,
+        "fields": {
+            "name": "Can view find",
+            "content_type": 13,
+            "codename": "view_find"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 53,
+        "fields": {
+            "name": "Can add defend",
+            "content_type": 14,
+            "codename": "add_defend"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 54,
+        "fields": {
+            "name": "Can change defend",
+            "content_type": 14,
+            "codename": "change_defend"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 55,
+        "fields": {
+            "name": "Can delete defend",
+            "content_type": 14,
+            "codename": "delete_defend"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 56,
+        "fields": {
+            "name": "Can view defend",
+            "content_type": 14,
+            "codename": "view_defend"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 57,
+        "fields": {
+            "name": "Can add attack",
+            "content_type": 15,
+            "codename": "add_attack"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 58,
+        "fields": {
+            "name": "Can change attack",
+            "content_type": 15,
+            "codename": "change_attack"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 59,
+        "fields": {
+            "name": "Can delete attack",
+            "content_type": 15,
+            "codename": "delete_attack"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 60,
+        "fields": {
+            "name": "Can view attack",
+            "content_type": 15,
+            "codename": "view_attack"
         }
     },
     {
@@ -172,6 +591,684 @@
             "date_joined": "2022-08-16T15:59:30.635Z",
             "groups": [],
             "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$1QwPJi4zP9FtkNxbpytntB$A+6bWWsu683xeqBI1PXjQmFqA1kYR50ANQTqmQo6khQ=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Jaime",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-10-14T17:36:26.664Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 5,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$c8MSg1sRag1TXjay2zmaGa$39jD+jcjCJhBjX0WV8eXgOaZ5jHT9T2RgwonEPpQL4g=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Kako",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-10-14T17:36:33.609Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 6,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$3lgcSjtrpYsO1TgBJMviEn$DfgwTiYLXjpFNgUYyWIQ7oopi/ZflDuZLGWgZ/OB7AY=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Franmi",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-10-14T17:36:40.381Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 7,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$ZYbkCCWYBxTiuxoTQOzQrZ$83tHJQfOBXpTZ2N+II5jxjm5JzE2HBQEylwKDAUb2FE=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Carliwi",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-10-14T17:36:46.850Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 8,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$X52WldrqaErk0gapz781vF$UEqBPSqMDP+m0WCCLrelQBSzKD6jKCYxEQJ97xMbcUE=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Fernando",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-10-14T17:37:02.892Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 9,
+        "fields": {
+            "password": "pbkdf2_sha256$320000$916brCOrPvF4U3XziheRWa$iMWa9mKel9ep8UambaMT0xNRIUyTDBc0TwZrHkJY1HM=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Diega",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-10-14T17:37:08.782Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 1,
+        "fields": {
+            "app_label": "admin",
+            "model": "logentry"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 2,
+        "fields": {
+            "app_label": "auth",
+            "model": "permission"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 3,
+        "fields": {
+            "app_label": "auth",
+            "model": "group"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 4,
+        "fields": {
+            "app_label": "auth",
+            "model": "user"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 5,
+        "fields": {
+            "app_label": "contenttypes",
+            "model": "contenttype"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 6,
+        "fields": {
+            "app_label": "sessions",
+            "model": "session"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 7,
+        "fields": {
+            "app_label": "api",
+            "model": "ia"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 8,
+        "fields": {
+            "app_label": "api",
+            "model": "map"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 9,
+        "fields": {
+            "app_label": "api",
+            "model": "match"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 10,
+        "fields": {
+            "app_label": "api",
+            "model": "zone"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 11,
+        "fields": {
+            "app_label": "api",
+            "model": "move"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 12,
+        "fields": {
+            "app_label": "api",
+            "model": "matchia"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 13,
+        "fields": {
+            "app_label": "api",
+            "model": "find"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 14,
+        "fields": {
+            "app_label": "api",
+            "model": "defend"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 15,
+        "fields": {
+            "app_label": "api",
+            "model": "attack"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "nage42yyhdc4ayga9y00urkuigmss6bq",
+        "fields": {
+            "session_data": ".eJxVjEEOgjAQRe_StWlap1Dq0j1nIDOdGYsaSCisjHdXEha6_e-9_zIDbmsZtirLMLK5GG9Ovxthfsi0A77jdJttnqd1Gcnuij1otf3M8rwe7t9BwVq-tcQOQBTJY3aOIxBkIZCYOCpQcqQdJgjQdKoZiFLLbYMcxDv152DeHwzlOL8:1ojOaT:jt3JR1PPfS9o8Bqn2vsbEfnI0GSXWSjqx4q5UGnfaus",
+            "expire_date": "2022-10-28T17:35:09.994Z"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "name": "ewokcillo"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "name": "randolphcarter"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "name": "CharlesDexterWard"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 4,
+        "fields": {
+            "user": 4,
+            "name": "Jaime"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 5,
+        "fields": {
+            "user": 5,
+            "name": "Kako"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 6,
+        "fields": {
+            "user": 6,
+            "name": "Franmi"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 7,
+        "fields": {
+            "user": 7,
+            "name": "Carliwi"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 8,
+        "fields": {
+            "user": 8,
+            "name": "Fernando"
+        }
+    },
+    {
+        "model": "api.ia",
+        "pk": 9,
+        "fields": {
+            "user": 9,
+            "name": "Diega"
+        }
+    },
+    {
+        "model": "api.map",
+        "pk": 1,
+        "fields": {
+            "name": "arkham"
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 1,
+        "fields": {
+            "name": "miskatonic university",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                2
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 2,
+        "fields": {
+            "name": "corbit house",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                1,
+                3
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 3,
+        "fields": {
+            "name": "undergrounds",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                2
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 4,
+        "fields": {
+            "name": "cantabria",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                5
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 5,
+        "fields": {
+            "name": "pais vasco",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                4,
+                7,
+                6
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 6,
+        "fields": {
+            "name": "navarra",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": true,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                5,
+                8,
+                7
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 7,
+        "fields": {
+            "name": "la rioja",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                5,
+                8,
+                6
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 8,
+        "fields": {
+            "name": "aragon",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": true,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                13,
+                12,
+                9,
+                7,
+                6
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 9,
+        "fields": {
+            "name": "cataluña",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                13,
+                8
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 10,
+        "fields": {
+            "name": "madrid",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": true,
+            "go_ryu": true,
+            "karin_gift": false,
+            "neighbors": [
+                12
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 11,
+        "fields": {
+            "name": "extremadura",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                15,
+                12
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 12,
+        "fields": {
+            "name": "castilla y la mancha",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": true,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                10,
+                15,
+                14,
+                13,
+                11,
+                8
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 13,
+        "fields": {
+            "name": "comunidad valenciana",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                14,
+                12,
+                9,
+                8
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 14,
+        "fields": {
+            "name": "murcia",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": false,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                15,
+                13,
+                12
+            ]
+        }
+    },
+    {
+        "model": "api.zone",
+        "pk": 15,
+        "fields": {
+            "name": "andalucia",
+            "map": 1,
+            "enable": true,
+            "lucky_unlucky": true,
+            "go_ryu": false,
+            "karin_gift": false,
+            "neighbors": [
+                14,
+                12,
+                11
+            ]
+        }
+    },
+    {
+        "model": "api.match",
+        "pk": 2,
+        "fields": {
+            "name": "world war z",
+            "map": 1,
+            "damage": 12
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 3,
+        "fields": {
+            "ia": 3,
+            "match": 2,
+            "where_am_i": 3,
+            "life": 50,
+            "alive": true,
+            "lucky_unlucky": 0,
+            "go_ryu": 0
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 4,
+        "fields": {
+            "ia": 1,
+            "match": 2,
+            "where_am_i": 2,
+            "life": 50,
+            "alive": true,
+            "lucky_unlucky": 0,
+            "go_ryu": 0
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 5,
+        "fields": {
+            "ia": 4,
+            "match": 2,
+            "where_am_i": 7,
+            "life": 1580,
+            "alive": true,
+            "lucky_unlucky": 3,
+            "go_ryu": 0
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 6,
+        "fields": {
+            "ia": 5,
+            "match": 2,
+            "where_am_i": 5,
+            "life": 0,
+            "alive": false,
+            "lucky_unlucky": 0,
+            "go_ryu": 0
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 7,
+        "fields": {
+            "ia": 6,
+            "match": 2,
+            "where_am_i": 12,
+            "life": -2,
+            "alive": false,
+            "lucky_unlucky": 1,
+            "go_ryu": 0
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 8,
+        "fields": {
+            "ia": 7,
+            "match": 2,
+            "where_am_i": 13,
+            "life": 1227,
+            "alive": true,
+            "lucky_unlucky": 0,
+            "go_ryu": 0
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 9,
+        "fields": {
+            "ia": 8,
+            "match": 2,
+            "where_am_i": 11,
+            "life": 1218,
+            "alive": true,
+            "lucky_unlucky": 3,
+            "go_ryu": 0
+        }
+    },
+    {
+        "model": "api.matchia",
+        "pk": 10,
+        "fields": {
+            "ia": 9,
+            "match": 2,
+            "where_am_i": 13,
+            "life": 1203,
+            "alive": true,
+            "lucky_unlucky": 0,
+            "go_ryu": 0
         }
     }
 ]

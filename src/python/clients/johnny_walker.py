@@ -1,6 +1,5 @@
 from os import getenv
 from random import choice
-from time import sleep
 
 import requests
 
@@ -47,6 +46,5 @@ def move_to_zone():
     return response.status_code
 
 
-while move_to_zone() == 201:
-    # sleep(3)
-    pass
+# while move_to_zone() == 201:
+#     pass

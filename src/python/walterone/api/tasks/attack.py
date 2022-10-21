@@ -23,7 +23,6 @@ def get_defend_value(match_ia, damage):
     if match_ia.go_ryu > 0:
         match_ia.go_ryu -= 1
         defend_value += go_ryu(damage)
-    
 
     return defend_value
 

@@ -1,4 +1,3 @@
-from email.policy import default
 from random import choice
 from django.db import models
 from django.db.models.signals import post_save
@@ -23,7 +22,7 @@ class Match(models.Model):
         through='MatchIA'
     )
 
-    damage = models.IntegerField(default=8)
+    damage = models.IntegerField(default=12)
 
     def __str__(self):
         return f"{self.name}: {self.map.name}"

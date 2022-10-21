@@ -56,12 +56,12 @@ class AttackViewSet(ModelViewSet):
         sleep(settings.ATTACK_DELAY)
         data['status_info'] = {
             attack_from: {
-                'lucky_unlucky': attacked.lucky_unlucky,
-                # 'go_ryu': attacked.go_ryu
+                'lucky_unlucky': attacker.lucky_unlucky,
+                'go_ryu': attacker.go_ryu
             },
             attack_to: {
-                'lucky_unlucky': attacker.lucky_unlucky,
-                # 'go_ryu': attacker.go_ryu
+                'lucky_unlucky': attacked.lucky_unlucky,
+                'go_ryu': attacked.go_ryu
             }
         }
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)

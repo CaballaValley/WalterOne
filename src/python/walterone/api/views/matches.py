@@ -1,3 +1,5 @@
+import logging
+
 from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
@@ -18,6 +20,7 @@ class FindViewSet(ViewSet):
                     alive=True
                 )
             except Exception as e:
+                logging.error(f"Permission denied {e}")
                 raise PermissionDenied("You are not alive here!!!")
             match_ias = MatchIA.objects.filter(
                 match_id=match,
@@ -25,7 +28,7 @@ class FindViewSet(ViewSet):
                 alive=True
             )
             neighbours_zones = match_ia.where_am_i.neighbors.all()
-            print(
+            logging.info(
                 "*"*20,
                 self.request.user.ia,
                 match_ia.where_am_i,

@@ -13,3 +13,32 @@ docker-compose build && docker-compose up
 '''
 ./deploy/local/startup_local.sh
 '''
+
+# System initialization:
+## Create django user
+
+## Locally
+
+Install virutal environment and requirements:
+```commandline
+python -m venv .env
+source .env/bin/activate
+python -m pip install -r config/dependencies/requirements.txt
+```
+
+In order to create django superuser, execute command:
+```commandline
+python manage.py createsuperuser
+```
+An step by step inputs are required, follow it!
+
+### with docker
+Using docker you need to access web container
+```commandline
+docker-compose exec web bash
+```
+Then, just follow `Locally` guide setup on previous point.
+
+## Connect to server via web:
+
+* REST API doc endpoint: [http://127.0.0.1:8000](http://127.0.0.1:8000)

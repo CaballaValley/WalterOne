@@ -94,15 +94,15 @@ class Move(Action):
         match_ia.save()
 
     @classmethod
-    def check_neighbours(cls, instance):
-        match_ia = instance.ia.matchia_set.get(match_id=instance.match.id)
+    def check_neighbours(cls, move_instance):
+        match_ia = move_instance.ia.matchia_set.get(match_id=move_instance.match.id)
         last_zone = match_ia.where_am_i
-        if last_zone and last_zone != instance.to_zone:
+        if last_zone and last_zone != move_instance.to_zone:
             is_neighbours = last_zone.neighbors.filter(
-                id=instance.to_zone.id
+                id=move_instance.to_zone.id
             )
             if not is_neighbours:
-                msg = f"this zone is far far from here {instance.to_zone.id}"
+                msg = f"this zone is far far from here {move_instance.to_zone.id}"
                 raise ValidationError(
                     {
                         'to_zone': msg
@@ -110,6 +110,6 @@ class Move(Action):
                 )
 
 
-@receiver(pre_save, sender=Move)
-def signal_check_neighbours(sender, instance, **kwargs):
-    sender.check_neighbours(instance)
+# @receiver(pre_save, sender=Move)
+# def signal_check_neighbours(sender, instance, **kwargs):
+#     sender.check_neighbours(instance)

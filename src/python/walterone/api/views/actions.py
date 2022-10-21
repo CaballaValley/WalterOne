@@ -1,6 +1,7 @@
 from asyncio.log import logger
 from time import sleep
 
+from django.core.exceptions import ValidationError
 from django.conf import settings
 from rest_framework import status
 from rest_framework.response import Response
@@ -112,6 +113,9 @@ class MoveViewSet(ModelViewSet):
         }
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
+
+        MoveViewSet.check_neighbour(match_ia_instance, zone_instance)
+
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
@@ -120,6 +124,21 @@ class MoveViewSet(ModelViewSet):
     def perform_create(self, serializer):
         ia = self.request.user.ia
         serializer.save(ia=ia)
+
+    @classmethod
+    def check_neighbour(cls, match_ia, to_zone):
+        last_zone = match_ia.where_am_i
+        if last_zone and last_zone != to_zone:
+            is_neighbours = last_zone.neighbors.filter(
+                id=to_zone.id
+            )
+            if not is_neighbours:
+                msg = f"this zone is far far from here {to_zone.id}"
+                raise ValidationError(
+                    {
+                        'to_zone': msg
+                    }
+                )
 
 
 class DefendViewSet(ModelViewSet):

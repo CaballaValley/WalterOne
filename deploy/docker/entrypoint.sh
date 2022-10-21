@@ -22,6 +22,6 @@ cd /usr/src/app
 python manage.py migrate
 python manage.py loaddata fixtures/fixtures.json
 
-celery -A walterone worker -l DEBUG -D
+celery -A walterone worker -l DEBUG --concurrency 1 --logfile=/var/log/celery.log -D
 
 exec "$@"

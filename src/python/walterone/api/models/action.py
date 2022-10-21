@@ -1,8 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db import transaction
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+
+from api.models.match import MatchIA
 
 
 class Action(models.Model):
@@ -85,12 +86,12 @@ class Move(Action):
         default=True
     )
 
-    def save(self, *args, **kwargs):
-        with transaction.atomic():
-            match_ia = self.ia.matchia_set.get(match_id=self.match.id)
-            match_ia.where_am_i = self.to_zone
-            match_ia.save()
-            super(Move, self).save(*args, **kwargs)
+    @classmethod
+    def set_where_am_i(cls, match_ia_id):
+        match_ia = MatchIA.objects.get(id=match_ia_id)
+        match_ia.where_am_i = cls.objects.filter(
+            ia=match_ia.ia, match=match_ia.match).last().to_zone
+        match_ia.save()
 
     @classmethod
     def check_neighbours(cls, instance):
@@ -101,8 +102,12 @@ class Move(Action):
                 id=instance.to_zone.id
             )
             if not is_neighbours:
+                msg = f"this zone is far far from here {instance.to_zone.id}"
                 raise ValidationError(
-                    {'to_zone': f"this zone is far far from here {instance.to_zone.id}"})
+                    {
+                        'to_zone': msg
+                    }
+                )
 
 
 @receiver(pre_save, sender=Move)

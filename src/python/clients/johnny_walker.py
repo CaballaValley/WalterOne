@@ -46,5 +46,5 @@ def move_to_zone():
     return response.status_code
 
 
-# while move_to_zone() == 201:
-#     pass
+while move_to_zone() == 201:
+    pass

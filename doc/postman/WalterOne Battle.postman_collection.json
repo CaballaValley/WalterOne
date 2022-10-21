@@ -1,0 +1,121 @@
+{
+	"variables": [],
+	"info": {
+		"name": "WalterOne Battle",
+		"_postman_id": "d526dcd1-9e11-555c-e6b7-6603c47a1a8c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Find action",
+			"request": {
+				"url": {
+					"raw": "http://{{hostname}}/finds?match=2",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"finds"
+					],
+					"query": [
+						{
+							"key": "match",
+							"value": "2",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic RGllZ2E6UmFuZG9tUGFzc3dvcmQ=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Moves action",
+			"request": {
+				"url": "http://{{hostname}}/moves/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic cmFuZG9scGhjYXJ0ZXI6UmFuZG9tUGFzc3dvcmQ=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"match\": 2,\n\t\"to_zone\": 3\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Defends action",
+			"request": {
+				"url": "http://{{hostname}}/defends/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic RGllZ2E6UmFuZG9tUGFzc3dvcmQ=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"active\": true,\n\t\"match_ia\": 2\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Attack  action",
+			"request": {
+				"url": "http://{{hostname}}/attacks/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic RGllZ2E6UmFuZG9tUGFzc3dvcmQ=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"attack_to\": 3,\n\t\"match\": 2\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

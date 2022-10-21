@@ -1,6 +1,8 @@
 from asyncio.log import logger
 from time import sleep
 
+from django.core.exceptions import ValidationError
+from django.http import HttpResponseBadRequest
 from django.conf import settings
 from rest_framework import status
 from rest_framework.response import Response
@@ -112,6 +114,12 @@ class MoveViewSet(ModelViewSet):
         }
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
+
+        neighbour_ok = self.check_neighbour(match_ia_instance, zone_instance)
+        if not neighbour_ok:
+            return Response(
+                {"Fail": "wrong zone"}, status=status.HTTP_400_BAD_REQUEST)
+
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
@@ -120,6 +128,18 @@ class MoveViewSet(ModelViewSet):
     def perform_create(self, serializer):
         ia = self.request.user.ia
         serializer.save(ia=ia)
+
+    def check_neighbour(self, match_ia, to_zone):
+        last_zone = match_ia.where_am_i
+        neighbour_ok = True
+        if last_zone and last_zone != to_zone:
+            is_neighbours = last_zone.neighbors.filter(
+                id=to_zone.id
+            )
+            if not is_neighbours:
+                neighbour_ok = False
+
+        return neighbour_ok
 
 
 class DefendViewSet(ModelViewSet):

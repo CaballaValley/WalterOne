@@ -165,8 +165,10 @@ class DefendViewSet(ModelViewSet):
         if not match_ia_instance.alive:
             return Response(
                 {"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
+
         # HOTFIX: clean defends of this matchia
         Defend.objects.filter(match_ia=match_ia).delete()
+
         data = {
             'active': active,
             'match_ia': match_ia

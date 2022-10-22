@@ -36,6 +36,13 @@ class Attack(Action):
         related_name="attack_to"
     )
 
+    def __str__(self):
+        attack_to_match_ia = MatchIA.get(ia=self.attack_to)
+        return str(
+            f"{self.attack_from} strikes with base damage {self.damage}."
+            f" IA damaged with current HP {attack_to_match_ia.life}"
+        )
+
 
 class Defend(models.Model):
     shield = models.IntegerField(
@@ -85,6 +92,11 @@ class Move(Action):
     active = models.BooleanField(
         default=True
     )
+
+    def __str__(self):
+        return str(
+            f"{self.ia} moves to zone {self.to_zone.name}"
+        )
 
     @classmethod
     def set_where_am_i(cls, match_ia_id):

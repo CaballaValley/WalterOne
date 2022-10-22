@@ -38,10 +38,11 @@ class Attack(Action):
     )
 
     def __str__(self):
-        attack_to_match_ia = MatchIA.objects.get(ia=self.attack_to)
+        attack_to_match_ia = MatchIA.objects.get(
+            match=self.match,
+            ia=self.attack_to)
         return str(
-            f"{self.attack_from} strikes with base damage {self.damage}."
-            f" IA damaged with current HP {attack_to_match_ia.life}"
+            f"{self.timestamp} ({self.id}) - {self.attack_from} strikes with base damage {self.damage} to IA {attack_to_match_ia.ia}"
         )
 
 
@@ -96,7 +97,7 @@ class Move(Action):
 
     def __str__(self):
         return str(
-            f"Move id ({self.id}): {self.ia} moves to zone {self.to_zone.name}"
+            f"{self.timestamp} ({self.id})- {self.ia} moves to zone {self.to_zone.name}"
         )
 
     @classmethod

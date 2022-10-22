@@ -2,7 +2,8 @@ from api.event_triggers import \
     set_lucky_unlucky,\
     set_go_ryu,\
     set_karin_gift
-from api.models.action import Move
+from api.models.match import MatchIA
+from api.models.zone import Zone
 from walterone.celery import app
 
 
@@ -22,5 +23,7 @@ def karin_gift_task(self, match_ia_id):
 
 
 @app.task(bind=True)
-def where_am_i_task(self, match_ia_id):
-    Move.set_where_am_i(match_ia_id)
+def where_am_i_task(self, zone_id, match_ia_id):
+    match_ia = MatchIA.objects.get(id=match_ia_id)
+    match_ia.where_am_i = Zone.objects.get(id=zone_id)
+    match_ia.save()

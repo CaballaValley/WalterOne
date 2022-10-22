@@ -46,4 +46,4 @@ def karin_gift_task_to_celery(sender, instance, **kwargs):
 @receiver(post_save, sender=Move)
 def where_am_i_task_to_celery(sender, instance, **kwargs):
     match_ia_id = instance.ia.matchia_set.get(match_id=instance.match.id).id
-    where_am_i_task.apply_async((match_ia_id,))
+    where_am_i_task.apply_async((instance.to_zone.id, match_ia_id,))

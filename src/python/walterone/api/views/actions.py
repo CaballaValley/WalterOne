@@ -166,6 +166,7 @@ class DefendViewSet(ModelViewSet):
             return Response(
                 {"Fail": "you are dead"}, status=status.HTTP_401_UNAUTHORIZED)
 
+
         data = {
             'active': active,
             'match_ia': match_ia

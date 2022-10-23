@@ -45,6 +45,8 @@ def zones(request, match_id):
             "id": match_ia.id,
             "zone": match_ia.where_am_i.name,
             "life": match_ia.life,
+            "lucky_unlucky": match_ia.lucky_unlucky,
+            "go_ryu": match_ia.go_ryu,
         })
 
     context["match_ias"] = ias

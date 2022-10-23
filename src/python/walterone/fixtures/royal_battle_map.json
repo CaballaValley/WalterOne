@@ -1,0 +1,199 @@
+[
+{
+    "model": "api.map",
+    "pk": 2,
+    "fields": {
+        "name": "Battle Royal"
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 16,
+    "fields": {
+        "name": "Acuario",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": false,
+        "go_ryu": false,
+        "karin_gift": true,
+        "neighbors": [
+            17,
+            22,
+            24
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 17,
+    "fields": {
+        "name": "Boyero",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": false,
+        "go_ryu": false,
+        "karin_gift": false,
+        "neighbors": [
+            16,
+            23,
+            24
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 19,
+    "fields": {
+        "name": "Casiopea",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": true,
+        "go_ryu": false,
+        "karin_gift": false,
+        "neighbors": [
+            20,
+            23,
+            21
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 20,
+    "fields": {
+        "name": "Draco",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": false,
+        "go_ryu": false,
+        "karin_gift": false,
+        "neighbors": [
+            19,
+            22,
+            21
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 21,
+    "fields": {
+        "name": "Escorpio",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": false,
+        "go_ryu": false,
+        "karin_gift": false,
+        "neighbors": [
+            26,
+            19,
+            20
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 22,
+    "fields": {
+        "name": "Fornax",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": true,
+        "go_ryu": false,
+        "karin_gift": true,
+        "neighbors": [
+            16,
+            20,
+            25
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 23,
+    "fields": {
+        "name": "Gemini",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": true,
+        "go_ryu": false,
+        "karin_gift": true,
+        "neighbors": [
+            17,
+            19,
+            26
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 24,
+    "fields": {
+        "name": "Hydra",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": false,
+        "go_ryu": false,
+        "karin_gift": false,
+        "neighbors": [
+            16,
+            17,
+            26,
+            27
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 25,
+    "fields": {
+        "name": "Indus",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": false,
+        "go_ryu": false,
+        "karin_gift": false,
+        "neighbors": [
+            26,
+            27,
+            22
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 26,
+    "fields": {
+        "name": "Jishui",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": false,
+        "go_ryu": true,
+        "karin_gift": false,
+        "neighbors": [
+            21,
+            23,
+            24,
+            25,
+            27
+        ]
+    }
+},
+{
+    "model": "api.zone",
+    "pk": 27,
+    "fields": {
+        "name": "Kang",
+        "map": 2,
+        "enable": true,
+        "lucky_unlucky": false,
+        "go_ryu": true,
+        "karin_gift": false,
+        "neighbors": [
+            24,
+            25,
+            26
+        ]
+    }
+}
+]

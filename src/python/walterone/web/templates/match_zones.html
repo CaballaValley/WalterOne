@@ -27,12 +27,16 @@ tr:nth-child(even) {
                 <th>IA(id)</th>
                 <th>Life</th>
                 <th>Zone</th>
+                <th>Lucky unlucky</th>
+                <th>Go ryu</th>
             </tr>
             {% for match_ia in match_ias %}
             <tr>
                 <td>{{ match_ia.name }} ({{ match_ia.id }})</td>
                 <td>{{ match_ia.life }}</td>
                 <td>{{ match_ia.zone }} </td>
+                <td>{{ match_ia.lucky_unlucky }} </td>
+                <td>{{ match_ia.go_ryu }} </td>
             </tr>
             {% endfor %}
         </table>

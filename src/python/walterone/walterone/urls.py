@@ -21,6 +21,7 @@ from rest_framework import routers
 from api.admin import admin_site
 from api.views.actions import AttackViewSet, DefendViewSet,  MoveViewSet
 from api.views.matches import FindViewSet
+from web import urls as web_urls
 
 
 router = routers.DefaultRouter()
@@ -33,5 +34,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin-match-panel/', admin_site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('finds/', FindViewSet.as_view({'get': 'retrieve'}))
+    path('finds/', FindViewSet.as_view({'get': 'retrieve'})),
+    path('web/', include(web_urls.urlpatterns)),
 ]

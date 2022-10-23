@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+<html>
+    <body>
+
+        <h1>IAs</h1>
+        <table>
+            <tr>
+                <th>IA(id)</th>
+                <th>Life</th>
+                <th>Zone</th>
+            </tr>
+            {% for match_ia in match_ias %}
+            <tr>
+                <td>{{ match_ia.name }} ({{ match_ia.id }})</td>
+                <td>{{ match_ia.life }}</td>
+                <td>{{ match_ia.zone }} </td>
+            </tr>
+            {% endfor %}
+        </table>
+    <div>
+
+        <h1> Match: {{ match_name }}</h1>
+    <table>
+        <tr>
+            <th>Zone(id)</th>
+            <th>status</th>
+            <th>Lucky unlucky</th>
+            <th>Karin gift</th>
+            <th>Go Ryu</th>
+            <th>Number of neighbours</th>
+            <th>Neighbours</th>
+        </tr>
+        {% for zone in zones %}
+        <tr>
+            <td>{{ zone.name }} ({{ zone.id }})</td>
+            <td>{{ zone.status }}</td>
+            <td>{{ zone.lucky_unlucky }}</td>
+            <td>{{ zone.karin_gift }}</td>
+            <td>{{ zone.go_ryu }}</td>
+            <td>{{ zone.number_neighbours }}</td>
+            <td>{{ zone.vecinos }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    </div>
+    </body>
+</html>

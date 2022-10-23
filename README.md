@@ -42,3 +42,7 @@ Then, just follow `Locally` guide setup on previous point.
 ## Connect to server via web:
 
 * REST API doc endpoint: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+# Web vies:
+
+* Matches view: if you want to open [match 2 view](http://127.0.0.1:8000/web/2/zones/)

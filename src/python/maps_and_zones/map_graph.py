@@ -16,3 +16,4 @@ for i, zone in enumerate(zones, 1):
     print(lucky_unlucky_trigger)
     print(go_ryu)
     print(karin_gift)
+

@@ -2,7 +2,9 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import get_object_or_404
 
-from api.models import Match, Map, Zone, MatchIA
+from api.models.match import Match, MatchIA
+from api.models.map import Map
+from api.models.zone import Zone
 
 
 def zones(request, match_id):

@@ -19,7 +19,7 @@ docker-compose build && docker-compose up
 
 ## Locally
 
-Install virutal environment and requirements:
+Install virtual environment and requirements:
 ```commandline
 python -m venv .env
 source .env/bin/activate
@@ -46,3 +46,9 @@ Then, just follow `Locally` guide setup on previous point.
 # Web vies:
 
 * Matches view: if you want to open [match 2 view](http://127.0.0.1:8000/web/2/zones/)
+
+# Execute tests:
+Start up your project using docker. Then you can run tests inside `walterone-web-1` container: 
+```commandline
+docker exec -u 0 -it walterone-web-1 python manage.py test
+```

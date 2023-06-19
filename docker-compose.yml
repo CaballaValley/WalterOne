@@ -4,6 +4,7 @@ version: '3.8'
 
 services:
   web:
+    container_name: walterone
     build: ./
     command: python manage.py runserver 0.0.0.0:8000
     volumes:

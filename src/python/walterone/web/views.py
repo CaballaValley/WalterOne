@@ -14,8 +14,7 @@ def zones(request, match_id):
     context = {
         "match_name": match.name
     }
-
-    royal_map = royal_map = Map.objects.get(name="Battle Royal")
+    royal_map = get_object_or_404(Map, name="Battle Royal")
     zones = Zone.objects.filter(map=royal_map).order_by("name")
 
     zones_elements = []

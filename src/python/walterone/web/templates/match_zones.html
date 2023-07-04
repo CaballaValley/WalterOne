@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
+    <head>
+        {% if refresh %}
+        <meta http-equiv="refresh" content="{{refresh}}" >
+        {% endif %}
+    </head>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
-<html>
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+
+        footer {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 50px;
+        }
+    </style>
     <body>
         <h1>IAs</h1>
         <table>
@@ -33,38 +43,39 @@ tr:nth-child(even) {
             <tr>
                 <td>{{ match_ia.name }} ({{ match_ia.id }})</td>
                 <td>{{ match_ia.life }}</td>
-                <td>{{ match_ia.zone }} </td>
-                <td>{{ match_ia.lucky_unlucky }} </td>
-                <td>{{ match_ia.go_ryu }} </td>
+                <td>{{ match_ia.zone }}</td>
+                <td>{{ match_ia.lucky_unlucky }}</td>
+                <td>{{ match_ia.go_ryu }}</td>
             </tr>
             {% endfor %}
         </table>
-    <div>
+        <div>
 
-        <h1> Match: {{ match_name }}</h1>
-    <table>
-        <tr>
-            <th>Zone(id)</th>
-            <th>status</th>
-            <th>Lucky unlucky</th>
-            <th>Karin gift</th>
-            <th>Go Ryu</th>
-            <th>Number of neighbours</th>
-            <th>Neighbours</th>
-        </tr>
-        {% for zone in zones %}
-        <tr>
-            <td>{{ zone.name }} ({{ zone.id }})</td>
-            <td>{{ zone.status }}</td>
-            <td>{{ zone.lucky_unlucky }}</td>
-            <td>{{ zone.karin_gift }}</td>
-            <td>{{ zone.go_ryu }}</td>
-            <td>{{ zone.number_neighbours }}</td>
-            <td>{{ zone.vecinos }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+            <h1> Match: {{ match_name }}</h1>
+            <table>
+                <tr>
+                    <th>Zone(id)</th>
+                    <th>status</th>
+                    <th>Lucky unlucky</th>
+                    <th>Karin gift</th>
+                    <th>Go Ryu</th>
+                    <th>Number of neighbours</th>
+                    <th>Neighbours</th>
+                </tr>
+                {% for zone in zones %}
+                <tr>
+                    <td>{{ zone.name }} ({{ zone.id }})</td>
+                    <td>{{ zone.status }}</td>
+                    <td>{{ zone.lucky_unlucky }}</td>
+                    <td>{{ zone.karin_gift }}</td>
+                    <td>{{ zone.go_ryu }}</td>
+                    <td>{{ zone.number_neighbours }}</td>
+                    <td>{{ zone.vecinos }}</td>
+                </tr>
+                {% endfor %}
+            </table>
 
-    </div>
+        </div>
+        <footer>Reloaded on: {{datetime}}</footer>
     </body>
 </html>

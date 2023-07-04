@@ -1,10 +1,16 @@
+from datetime import datetime
+import pytz
+
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import get_object_or_404
 
+
 from api.models.match import Match, MatchIA
 from api.models.map import Map
 from api.models.zone import Zone
+
+ES_TIMEZONE = pytz.timezone('Europe/Madrid')
 
 
 def zones(request, match_id):
@@ -12,10 +18,12 @@ def zones(request, match_id):
     match = get_object_or_404(Match, id=match_id)
     template = loader.get_template("match_zones.html")
     context = {
-        "match_name": match.name
+        "match_name": match.name,
+        "refresh": request.GET.get('refresh', False),
+        "datetime": datetime.now(ES_TIMEZONE).isoformat()
     }
 
-    royal_map = royal_map = Map.objects.get(name="Battle Royal")
+    royal_map = Map.objects.get(name="Battle Royal")
     zones = Zone.objects.filter(map=royal_map).order_by("name")
 
     zones_elements = []

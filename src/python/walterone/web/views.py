@@ -14,7 +14,6 @@ ES_TIMEZONE = pytz.timezone('Europe/Madrid')
 
 
 def zones(request, match_id):
-
     match = get_object_or_404(Match, id=match_id)
     template = loader.get_template("match_zones.html")
     context = {
@@ -48,7 +47,7 @@ def zones(request, match_id):
     context["zones"] = zones_elements
 
     ias = []
-    for match_ia in MatchIA.objects.filter(match=match).order_by("-life"):
+    for match_ia in match.matchia_set.order_by("-life"):
         print(match_ia)
         ias.append({
             "name": match_ia.ia.name,

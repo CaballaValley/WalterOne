@@ -40,3 +40,18 @@ class TestApi(TestCase):
         request = django.test.RequestFactory()
         with self.assertRaises(Http404):
             zones(request, invented_match_id)
+
+    def test_BattleRoyal_map_not_exists(self):
+        request = django.test.RequestFactory()
+        self.assertTrue(
+            Match.objects.get(id=self.match.id) is not None
+        )
+        with self.assertRaises(Http404):
+            zones(request, self.match.id)
+
+    def test_no_errors_when_BattleRoyal_map_exists(self):
+
+        battle_royal = Map(name="Battle Royal")
+        battle_royal.save()
+        request = django.test.RequestFactory()
+        zones(request, self.match.id)

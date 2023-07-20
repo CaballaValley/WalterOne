@@ -6,7 +6,10 @@ from scipy.io.wavfile import write
 import whisper
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 

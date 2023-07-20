@@ -1,6 +1,12 @@
 import os
+import logging
+from pprint import pformat
 import sounddevice as sd
 from scipy.io.wavfile import write
+import whisper
+
+
+logging.basicConfig(level=logging.INFO)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -14,7 +20,7 @@ def get_default_device(devices):
 def set_device(devices, device_index):
     if device_index not in devices:
         raise ValueError(f"Device index {device_index} not found")
-    sd.default.device = devices[device_index]["name"]  # XXX: -1 is a hack
+    sd.default.device = devices[device_index]["name"]
 
 
 def select_device():
@@ -25,8 +31,8 @@ def select_device():
     ])
     default_id, default_device = get_default_device(devices_dict)
 
-    print(f"Available devices: {devices_msg}'")
-    print(f"Default device {default_device['name']}, id: {default_id}")
+    logging.info(f"Available devices: {devices_msg}'")
+    logging.info(f"Default device {default_device['name']}, id: {default_id}")
 
     device_index = int(
         input(f"Select device: ({default_id})") or default_id
@@ -36,30 +42,46 @@ def select_device():
     sd.default.device = device_index
 
 
-def handle():
+def record_voice_command(audio_file, duration=5):
     fs = 44100
-    duration = 5  # seconds
 
-    wav_file_name = os.path.join(HERE, 'output.wav')
+    wav_file_name = os.path.join(HERE, audio_file)
 
-    if not os.path.exists(wav_file_name):
-        # os.remove(wav_file_name)
-        select_device()
+    if os.path.exists(wav_file_name):
+        os.remove(wav_file_name)
 
-        recording = sd.rec(
-            duration * fs, samplerate=fs, channels=2, dtype='float32'
-        )
-        print("Recording Audio")
-        sd.wait()
+    select_device()
 
-        print("Audio recording complete , Play Audio")
-        sd.play(recording, fs)
-        sd.wait()
+    recording = sd.rec(
+        duration * fs, samplerate=fs, channels=2, dtype='float32'
+    )
+    logging.info("Recording Audio")
+    sd.wait()
 
-        write(wav_file_name, fs, recording)  # Save as WAV file
-        print("Play Audio Complete")
-    else:
-        print(f"File {wav_file_name} already exists")
+    logging.info("Audio recording complete , Play Audio")
+    sd.play(recording, fs)
+    sd.wait()
+    logging.info("Play Audio Complete")
+    logging.info(f"Saving Audio {wav_file_name}")
+    write(wav_file_name, fs, recording)
+
+
+def transcribe(audio_file, model_size="medium"):
+    logging.info(f"Transcribing {audio_file} with model {model_size}")
+    model = whisper.load_model(model_size)
+    result = model.transcribe(audio_file,
+                              language="es")
+    logging.debug(f"Model loaded: {pformat(result)}")
+    return result["text"]
+
+
+def handle():
+
+    audio_file = 'output.wav'
+    audio_file_path = os.path.join(HERE, audio_file)
+    record_voice_command(audio_file_path, 7)
+    order_text = transcribe(audio_file_path)
+    logging.info(f"Order text transcript from {audio_file_path}:\n{order_text}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,8 @@
+-r requirements.txt
+
+sounddevice==0.4.6
+openai-whisper==20230314
+scipy==1.11.1
+langchain==0.0.249
+openai==0.27.8
+openai-whisper==20230314

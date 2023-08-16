@@ -1,9 +1,12 @@
 import os
 import logging
 from pprint import pformat
+
 import sounddevice as sd
 from scipy.io.wavfile import write
 import whisper
+
+from .ai_commands import get_action_from_text
 
 
 logging.basicConfig(
@@ -78,43 +81,6 @@ def transcribe(audio_file, model_size="medium"):
     return result["text"]
 
 
-def get_action_from_text(text):
-    """
-    Muévete a l zona 8
-    Ataca al jugador JULIO
-    Defiéndete
-    """
-    actions = [
-        "ataca",
-        "defiende",
-        "muévete",
-    ]
-    actions_text = ','.join(actions)
-    template_intro = f"You are a NLP bot. Your mission is get an action name given a user input text." \
-                     f"The actions enabled are those {len(actions)}: {actions_text}. " \
-                     f"Your output always will be the action name extracted from the user input."
-
-    from langchain.prompts import PromptTemplate
-    from langchain.llms import OpenAI
-    from langchain.chains import LLMChain
-
-    llm = OpenAI(
-        model="davinci",
-        temperature=0.9
-    )
-    prompt = PromptTemplate(
-        input_variables=["user_input"],
-        template=template_intro + "This is user input :\n \"{user_input}\"",
-    )
-
-    chain = LLMChain(llm=llm, prompt=prompt)
-    result = chain.run(user_input=text)
-    breakpoint()
-    logging.info(f"Result: {result}")
-
-    return result
-
-
 def handle():
 
     audio_file = 'output.wav'
@@ -123,6 +89,7 @@ def handle():
     order_text = transcribe(audio_file_path)
     logging.info(f"Order text transcript from {audio_file_path}:\n{order_text}")
     action = get_action_from_text(order_text)
+    logging.info(f"Action extracted from text: {action}")
 
 
 if __name__ == "__main__":

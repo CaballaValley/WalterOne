@@ -52,3 +52,11 @@ Start up your project using docker. Then you can run tests inside `walterone-web
 ```commandline
 docker exec -u 0 -it walterone-web-1 python manage.py test
 ```
+
+# Players setup
+
+Since we have a module to manage players, we need to install `walterplayers` module:
+```commandline
+cd src/python/players_module
+python -m pip install -e .
+```

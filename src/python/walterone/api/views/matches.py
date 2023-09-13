@@ -10,6 +10,26 @@ from api.models.zone import Zone
 
 
 class FindViewSet(ViewSet):
+    def get_info_zone(self, match, zone):
+        match_ias = MatchIA.objects.filter(
+                match_id=match,
+                where_am_i=zone,
+                alive=True
+            )
+        return {
+            "zone": zone.id,
+            "ias": [
+                {
+                    "id": match_ia.ia.id,
+                    "life": match_ia.life
+                } for match_ia in match_ias
+                if match_ia.ia.id != self.request.user.ia.id
+            ],
+            'lucky_unlucky': zone.lucky_unlucky,
+            'go_ryu': zone.go_ryu,
+            'karin_gift': zone.karin_gift
+        }
+
     def retrieve(self, request):
         match = request.query_params.get('match')
         if match:
@@ -40,26 +60,13 @@ class FindViewSet(ViewSet):
                 logging.error(msg)
                 raise PermissionDenied(msg)
         else:
-            match_ias = MatchIA.objects.none()
             neighbours_zones = Zone.objects.none()
 
-        ias = []
-        for match_ia in match_ias:
-            if match_ia.ia.id != self.request.user.ia.id and match_ia.alive:
-                ias.append(match_ia.ia.id)
-
-        neighbours_zones_ids = []
-        for zone in neighbours_zones:
-            if zone.enable:
-                neighbours_zones_ids.append(zone.id)
-
         return Response({
-            'ias': ias,
-            'neighbours_zones': neighbours_zones_ids,
-            'triggers': {
-                'lucky_unlucky': match_ia.where_am_i.lucky_unlucky,
-                'go_ryu': match_ia.where_am_i.go_ryu,
-                'karin_gift': match_ia.where_am_i.karin_gift
-            },
+            "zone": self.get_info_zone(match, self_match_ia.where_am_i),
+            'neighbours_zones': [ 
+                self.get_info_zone(match, zone) for zone in neighbours_zones
+                if zone.enable
+            ],
             'life': self_match_ia.life,
         })

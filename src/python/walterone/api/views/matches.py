@@ -36,18 +36,29 @@ class FindViewSet(ViewSet):
             try:
                 self_match_ia = MatchIA.objects.get(
                     match_id=match,
-                    ia_id=self.request.user.ia.id,
-                    alive=True
+                    ia_id=self.request.user.ia.id
                 )
             except Exception as e:
-                logging.error(f"Permission denied {e}")
-                raise PermissionDenied("You are not alive here!!!")
-            neighbours_zones = self_match_ia.where_am_i.neighbors.all()
-            logging.info(
-                "*"*20,
-                self.request.user.ia,
-                self_match_ia.where_am_i
-            )
+                msg = f"User {self.request.user.ia.id} is not in match {match} {e}"
+                logging.error(msg)
+                raise PermissionDenied(msg)
+            if self_match_ia.alive:
+                match_ias = MatchIA.objects.filter(
+                    match_id=match,
+                    where_am_i_id=self_match_ia.where_am_i.id,
+                    alive=True
+                )
+                neighbours_zones = self_match_ia.where_am_i.neighbors.all()
+                logging.info(
+                    "*"*20,
+                    self.request.user.ia,
+                    self_match_ia.where_am_i,
+                    [ia.id for ia in match_ias]
+                )
+            else:
+                msg = f"User {self.request.user.ia.id} is dead in match {match}"
+                logging.error(msg)
+                raise PermissionDenied(msg)
         else:
             neighbours_zones = Zone.objects.none()
 

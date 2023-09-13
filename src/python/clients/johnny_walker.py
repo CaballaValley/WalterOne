@@ -30,10 +30,14 @@ def attack(ias):
 
 def find_zone():
     response_find = requests.get(find_endpoint, auth=auth)
-    find_data = response_find.json()
-    attack(find_data['ias'])
-    print(find_data)
-    return find_data['neighbours_zones']
+    if response_find.ok:
+        find_data = response_find.json()
+        attack(find_data['ias'])
+        print(find_data)
+        return find_data['neighbours_zones']
+    else:
+        print(response_find.json())
+        raise Exception
 
 
 def move_to_zone():

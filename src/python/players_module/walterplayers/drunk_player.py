@@ -2,6 +2,7 @@ from base_player import BasePlayer
 from constants import Action
 from random import choice
 
+
 class DrunkPlayer(BasePlayer):
     ''' Drunk player will choose one random available action  '''
 
@@ -10,7 +11,7 @@ class DrunkPlayer(BasePlayer):
 
         if not self.is_possible_attack(find_response):
             available_actions.remove(Action.Attack)
-        
+
         if not self.is_possible_move(find_response):
             available_actions.remove(Action.Move)
 

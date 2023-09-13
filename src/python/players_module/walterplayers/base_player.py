@@ -1,7 +1,5 @@
-from os import getenv
 from constants import Action
-from random import choice
-from ..client.walterone_client import WalteroneClient
+from walterplayers.client.walterone_client import WalteroneClient
 
 import datetime
 

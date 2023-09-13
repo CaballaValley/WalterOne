@@ -1,10 +1,9 @@
 import networkx as nx
 
+
 class DefensiveAdviser:
 
     def __init__(self):
         self._graph = nx.Graph()
 
-    def add_
-    
-
+    # def add_

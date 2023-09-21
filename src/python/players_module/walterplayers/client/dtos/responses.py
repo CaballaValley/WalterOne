@@ -1,4 +1,3 @@
-
 from typing import List, Optional
 from pydantic import BaseModel
 
@@ -7,12 +6,16 @@ class Buff(BaseModel):
     go_ryu: bool
     karin_gift: bool
 
+class Status(BaseModel):
+    zone: int
+    life: int
+    match_ia: int
+
 class FindResponse(BaseModel):
-    #TODO could be great to get id of current zone?
     ias: Optional[List[int]]
     neighbours_zones: Optional[List[int]]
     #TODO returns StatusInfo of ias ?¿
-    life: int
+    current_status: Status
     triggers: Buff
 
 class StatusInfo(BaseModel):
@@ -38,16 +41,16 @@ class DefendResponse(BaseModel):
 
 
 ###### TEST
-
+#
 #find_response_data = {
 #    'ias': [],
 #    'neighbours_zones': [5],  
 #    'triggers': {'lucky_unlucky': False, 'go_ryu': False, 'karin_gift': False},
-#    'life': 200 
+#    'current_status': {'zone': 1, 'life': 200, 'match_ia': 12 }
 #}
-
-#response = FindResponse(**external_data)
+#
 #print(response.ias)
+#response = FindResponse(**find_response_data)
 #print(response.triggers.go_ryu)
 #print(response.model_dump())
 

@@ -22,6 +22,7 @@ class FindViewSet(ViewSet):
                 msg = f"User {self.request.user.ia.id} is not in match {match} {e}"
                 logging.error(msg)
                 raise PermissionDenied(msg)
+            
             if self_match_ia.alive:
                 match_ias = MatchIA.objects.filter(
                     match_id=match,
@@ -61,5 +62,9 @@ class FindViewSet(ViewSet):
                 'go_ryu': match_ia.where_am_i.go_ryu,
                 'karin_gift': match_ia.where_am_i.karin_gift
             },
-            'life': self_match_ia.life,
+            'current_status': {
+                'zone': self_match_ia.where_am_i.id,
+                'life': self_match_ia.life,
+                'match_ia': self_match_ia.id
+            }
         })

@@ -4,7 +4,6 @@ from walterplayers.client.dtos.responses import FindResponse, AttackResponse, Mo
 import requests
 
 
-# TODO mover el paquete client fuera del players...no tengo cojones que funcionen los import
 class WalteroneClient:
     ''' Generic client to face walterone server '''
 
@@ -13,8 +12,6 @@ class WalteroneClient:
         self._walterone_username = getenv("WALTERONE_USERNAME", username)
         self._walterone_password = getenv("WALTERONE_PASSWORD", password)
         self._walterone_match = getenv("WALTERONE_MATCH", match)
-        # TODO self._walterone_ia = getenv("WALTERONE_MATCH", match)
-        self._walterone_ia = 11
 
         self._auth = (self._walterone_username, self._walterone_password)
 
@@ -76,17 +73,17 @@ class WalteroneClient:
             print('Error while trying to move to zone ' + str(to_zone) + '. Exception : ' + response.text)
             return True, None
 
-    def defends(self, active):
+    def defends(self, match_ia, active):
         ''' Chanfe your defend mode.
         Parameters
         ----------
+        match_ia: Identify of an IA playing in a match.
         active : True if you want to be defensive player, otherwise False.
         '''
 
         data = {
             "active": active,
-            # TODO cómo obtengo el id de mi IA para defenderme? lo tengo que sacar de un ataque?
-            "match_ia": self._walterone_ia
+            "match_ia": match_ia
         }
 
         response = requests.post(self._defend_endpoint, auth=self._auth, data=data)

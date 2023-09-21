@@ -6,51 +6,44 @@ import datetime
 class BasePlayer:
     ''' Abstract player with generic behavior of walterone player '''
 
-    def __init__(self, life_points = 200, host = None, username = None, password = None, match = None):
+    def __init__(self, host = None, username = None, password = None, match = None):
         self._walteroneClient = WalteroneClient(host, username, password, match)
-        self._life_points = life_points
 
-    
     def run(self):
-        ##TODO Podriamos tener una llamada que nos de la zona en la que estoy y la vida que tengo
-        ## buena para iniciarme
-        while self._life_points > 0:
-            
+        while True:
             error, find_response = self._walteroneClient.find_current_zone()
 
             if error:
-                pass
+                continue
 
-            ##TODO no necesitariamos la vida aquí.. si la sabemos previamente y con los actaques tambien
-            self._life_points = find_response.life
-
+            self._life_points = find_response.current_status.life
+            self._match_ia = find_response.current_status.match_ia
 
             if self._life_points <= 0:
                 # Bad luck, you are died!
-                pass
-
+                break
             
             next_action, arg = self.choose_action(find_response)
             
             match next_action:
                 case Action.Stop:
                     self.update_result(Action.Stop, False, None)
-                    pass
+                    continue
                 case Action.Attack:
                     error, attack_response = self._walteroneClient.attack(arg)
                     self.update_result(Action.Attack, error, attack_response)
-                    pass
+                    continue
                 case Action.Defend:
-                    error, defend_response = self._walteroneClient.defends(arg)
+                    error, defend_response = self._walteroneClient.defends(self._match_ia, arg)
                     self.update_result(Action.Defend, error, defend_response)
-                    pass
+                    continue
                 case Action.Move:
                     error, move_response = self._walteroneClient.move_to_zone(arg)
                     self.update_result(Action.Move, error, move_response)
-                    pass
+                    continue
                 case _:
                     print('Unknown chosen action: ' + str(next_action))
-        
+
         print('It seems I am died ! :( ')
     
     def _get_walterone_client(self):

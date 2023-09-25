@@ -34,6 +34,7 @@ class OffensiveAdviser(Adviser):
         
         # If a go ryu zone is known, player must go there
         if self.check_and_update_interested_zone_path(find_response):
+            print('New path set to go to a go ryu zone')
             return self._actions_to_execute.popleft()
         
         if len(find_response.neighbours_zones) == 0:

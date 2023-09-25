@@ -23,6 +23,7 @@ class DefensiveAdviser(Adviser):
         
         # If a karin gift is known, player must go there
         if self.check_and_update_interested_zone_path(find_response):
+            print('New path set to go to a karin_gift zone')
             return self._actions_to_execute.popleft()
         
         # It looks like we are one of the finisher players.

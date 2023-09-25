@@ -2,6 +2,8 @@ import networkx as nx
 from collections import deque
 import sys
 
+from walterplayers.constants import Action
+
 class Adviser():
 
     def __init__(self):
@@ -89,8 +91,9 @@ class Adviser():
     def check_and_update_interested_zone_path(self, find_response):
         shortest_path = self._compute_shortest_path(find_response.current_zone.zone_id, self._interested_zones)
         if shortest_path:
-            while shortest_path:
-                self._actions_to_execute.append((Action.Move, next_path.pop(0)))
+            for path in shortest_path:
+                self._actions_to_execute.append((Action.Move, path))
+                
             return True
 
         return False

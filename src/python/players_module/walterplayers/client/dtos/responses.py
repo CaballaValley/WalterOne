@@ -1,22 +1,28 @@
 from typing import List, Optional
 from pydantic import BaseModel
 
+class IA(BaseModel):
+    id: int
+    life: int
+
 class Buff(BaseModel):
     lucky_unlucky: bool
     go_ryu: bool
     karin_gift: bool
 
+class Zone(BaseModel):
+    zone_id: int
+    ias: Optional[List[IA]]
+    triggers: Buff
+
 class Status(BaseModel):
-    zone: int
     life: int
     match_ia: int
 
 class FindResponse(BaseModel):
-    ias: Optional[List[int]]
-    neighbours_zones: Optional[List[int]]
-    #TODO returns StatusInfo of ias ?¿
-    current_status: Status
-    triggers: Buff
+    current_zone: Zone
+    neighbours_zones: Optional[List[Zone]]
+    status: Status
 
 class StatusInfo(BaseModel):
     lucky_unlucky: int
@@ -29,7 +35,6 @@ class AttackResponse(BaseModel):
     status_info: dict[int, StatusInfo]
 
 class MoveResponse(BaseModel):
-    #TODO se está devolviendo un string como to_zone, consistencia en los tipos, en find es un int
     to_zone: int
     match: str
     triggers: Buff
@@ -43,15 +48,39 @@ class DefendResponse(BaseModel):
 ###### TEST
 #
 #find_response_data = {
-#    'ias': [],
-#    'neighbours_zones': [5],  
-#    'triggers': {'lucky_unlucky': False, 'go_ryu': False, 'karin_gift': False},
-#    'current_status': {'zone': 1, 'life': 200, 'match_ia': 12 }
+#    "current_zone": {
+#        "zone_id": 10,
+#        "ias": [{
+#                "id": 9,
+#                "life":1203
+#            },
+#            {
+#                "id": 10,
+#                "life":12
+#            }],
+#        "triggers": {
+#            "lucky_unlucky": True,
+#            "go_ryu": True,
+#            "karin_gift": False
+#        }},
+#    "neighbours_zones":[{
+#        "zone_id": 12,
+#        "ias": [],
+#        "triggers": {
+#            "lucky_unlucky": True,
+#            "go_ryu": True,
+#            "karin_gift": False
+#        }
+#    }],
+#    "status": {
+#        "life": 200, 
+#        "match_ia": 12 
+#    }
 #}
 #
-#print(response.ias)
+#
 #response = FindResponse(**find_response_data)
-#print(response.triggers.go_ryu)
+#print(response.current_zone.triggers.go_ryu)
 #print(response.model_dump())
 
 

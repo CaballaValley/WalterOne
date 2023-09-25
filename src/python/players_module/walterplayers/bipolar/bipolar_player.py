@@ -1,9 +1,11 @@
-from walterplayers.base_player import BasePlayer
-from walterplayers.bipolar.strategy_manager import StrategyManager
-from walterplayers.bipolar.graph_driver import GraphDriver
-
 import datetime
 
+from walterplayers.constants import Action
+from walterplayers.base_player import BasePlayer
+from walterplayers.bipolar.strategy_manager import StrategyManager
+from walterplayers.bipolar.advisers.defensive_adviser import DefensiveAdviser
+from walterplayers.bipolar.advisers.offensive_adviser import OffensiveAdviser
+from walterplayers.bipolar.constants import AdviserMode
 
 class BipolarPlayer(BasePlayer):
     ''' Bipolar player will change strategy based on life points.
@@ -12,26 +14,35 @@ class BipolarPlayer(BasePlayer):
     Defensive strategy will look for the health zone using dijkstra to compute the shortest way.
     Offensive strategy will attack when the player find an enemy in a zone.'''
 
-    def __init__(self, defensive_limit=0.8, ofensive_limit=0.9, host=None, username=None,
+    def __init__(self, defensive_limit=0.8, offensive_limit=0.9, host=None, username=None,
                  password=None, match=None):
         super().__init__(host, username, password, match)
-        self._strategy_manager = StrategyManager(life_points, defensive_limit, ofensive_limit)
-        self._graph_driver = GraphDriver()
+        self._strategy_manager = StrategyManager(defensive_limit, offensive_limit)
+        self._advisers = {
+            AdviserMode.Defensive: DefensiveAdviser(),
+            AdviserMode.Offensive: OffensiveAdviser()}
 
     def choose_action(self, find_response):
-        print(str(datetime.datetime.now()) + " - Updating life ponint to " + str(find_response.current_status.life))
-        self._strategy_manager.update_life_points(find_response.current_status.life)
+        print(str(datetime.datetime.now()) + ' - Updating life point to ' + str(find_response.status.life))
+        self._strategy_manager.update_life_points(find_response.status.life)
 
-        print('Update defends mode with: ' + str(self._strategy_manager.is_defensive_mode_active()))
-        self._get_walterone_client().defends(self._strategy_manager.is_defensive_mode_active())
+        if self._strategy_manager.is_strategy_changed():
+            print(str(datetime.datetime.now()) + ' - Update defends mode with: ' + str(AdviserMode.Defensive == self._strategy_manager.get_adviser_mode()))
+            self.get_walterone_client().defends(self._match_ia, AdviserMode.Defensive == self._strategy_manager.get_adviser_mode())
 
-        self._graph_driver.update_zone(find_response)
+        for adviser in self._advisers.values():
+            if self._strategy_manager.is_strategy_changed():
+                adviser.reset_strategy()
+            
+            adviser.add_or_update_zone(find_response)
         
-
-        # print('Updating adjacent zones: ' + str(find_zone_data['neighbours_zones']) + '')
-        # ship_captain.add_zone(find_zone_data['neighbours_zones'], find_zone_data['triggers']['karin_gift'], find_zone_data['triggers']['go_ryu'], find_zone_data['triggers']['lucky_unlucky'])
+        print(str(datetime.datetime.now()) + ' - Select next action from Adviser: ' + str(self._strategy_manager.get_adviser_mode()))
+        action = self._advisers[self._strategy_manager.get_adviser_mode()].get_next_action(find_response)
+        return action
 
     def update_result(self, executed_action, error, response):
         super().update_result(executed_action, error, response)
-
-        # si ha fallado un movimiento es xq ya no existe la zona, tenemos que eliminarla
+        # if an error was raised while moving, we should remove the zone
+        if error and Action.Move == executed_action:
+            for adviser in self._advisers.values():
+                adviser.remove_zone(response.to_zone)

@@ -7,6 +7,6 @@ class RoadRunnerPlayer(BasePlayer):
 
     def choose_action(self, find_response):
         if self.is_possible_move(find_response):
-            return Action.Move, choice(find_response.neighbours_zones)
+            return Action.Move, choice(self.get_id_neighbours_zones(find_response))
         else:
             return Action.Stop, None

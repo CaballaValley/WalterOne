@@ -8,7 +8,7 @@ class BillyTheKidPlayer(BasePlayer):
     def choose_action(self, find_response):
 
         if self.is_possible_attack(find_response):
-            return Action.Attack, choice(find_response.ias)
+            return Action.Attack, choice(self.get_id_ias(find_response))
         else:
             return Action.Stop, None
             

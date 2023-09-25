@@ -1,4 +1,4 @@
-from constants import Action
+from walterplayers.constants import Action
 from walterplayers.client.walterone_client import WalteroneClient
 
 import datetime
@@ -16,8 +16,8 @@ class BasePlayer:
             if error:
                 continue
 
-            self._life_points = find_response.current_status.life
-            self._match_ia = find_response.current_status.match_ia
+            self._life_points = find_response.status.life
+            self._match_ia = find_response.status.match_ia
 
             if self._life_points <= 0:
                 # Bad luck, you are died!
@@ -25,6 +25,8 @@ class BasePlayer:
             
             next_action, arg = self.choose_action(find_response)
             
+            print(str(datetime.datetime.now()) + " - Executing Action: " + str(next_action) + " with arguments: " + str(arg))
+
             match next_action:
                 case Action.Stop:
                     self.update_result(Action.Stop, False, None)
@@ -42,19 +44,29 @@ class BasePlayer:
                     self.update_result(Action.Move, error, move_response)
                     continue
                 case _:
-                    print('Unknown chosen action: ' + str(next_action))
+                    print(str(datetime.datetime.now()) + ' - Unknown chosen action: ' + str(next_action))
 
-        print('It seems I am died ! :( ')
+        print(str(datetime.datetime.now()) + ' - It seems I am died ! :( ')
     
-    def _get_walterone_client(self):
+    def get_walterone_client(self):
         return self._walteroneClient
+    
+    def get_life_points(self):
+        return self._life_points
 
     def is_possible_attack(self, find_response):
-        return len(find_response.ias) != 0
+        return len(find_response.current_zone.ias) != 0
+    
+    def get_id_ias(self, find_response):
+        return list(map(lambda ia: ia.id, find_response.current_zone.ias))
     
     def is_possible_move(self, find_response):
         return len(find_response.neighbours_zones) != 0
+    
+    def get_id_neighbours_zones(self, find_response):
+        return list(map(lambda zone: zone.zone_id, find_response.neighbours_zones))
             
+
     def choose_action(self, find_response):
         raise NotImplementedError()
 

@@ -19,10 +19,10 @@ class DrunkPlayer(BasePlayer):
 
         match result_action:
             case Action.Attack:
-                return result_action, choice(find_response.ias)
+                return result_action, choice(self.get_id_ias(find_response))
             case Action.Defend:
                 return result_action, choice([True, False])
             case Action.Move:
-                return result_action, choice(find_response.neighbours_zones)
+                return result_action, choice(self.get_id_neighbours_zones(find_response))
             case _:
                 return result_action, None

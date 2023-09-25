@@ -29,6 +29,9 @@ class DefensiveAdviser(Adviser):
         if len(find_response.neighbours_zones) == 0 and len(find_response.current_zone.ias) != 0:
             return Action.Attack, self.get_weakest_enemy(find_response)
         
+        if len(find_response.current_zone.ias) != 0 and uniform(0,1) < 0.20:
+            return Action.Attack, self.get_weakest_enemy(find_response)
+
         if uniform(0,1) >= 0.5:
             possible_zones = self.get_unkown_zones_or_copy(find_response)
             

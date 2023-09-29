@@ -22,7 +22,7 @@ def zones(request, match_id):
         "datetime": datetime.now(ES_TIMEZONE).isoformat()
     }
 
-    royal_map = get_object_or_404(Map, name="Battle Royal")
+    royal_map = get_object_or_404(Map, name="arkham")
     zones = Zone.objects.filter(map=royal_map).order_by("name")
 
     zones_elements = []

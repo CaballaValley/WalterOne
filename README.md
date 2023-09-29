@@ -79,3 +79,12 @@ source .env/bin/activate
 
 python -m pip install -r config/dependencies/voice_commands_requirements.txt
 ```
+
+
+# Players setup
+
+Since we have a module to manage players, we need to install `walterplayers` module:
+```commandline
+cd src/python/players_module
+python -m pip install -e .
+```

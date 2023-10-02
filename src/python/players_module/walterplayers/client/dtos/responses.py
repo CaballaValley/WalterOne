@@ -1,10 +1,13 @@
 from typing import List, Optional
 from pydantic import BaseModel
 
+from walterplayers.constants import Role
+
 class IA(BaseModel):
     id: int
     life: int
-
+    role: Role
+    
 class Buff(BaseModel):
     lucky_unlucky: bool
     go_ryu: bool
@@ -18,6 +21,7 @@ class Zone(BaseModel):
 class Status(BaseModel):
     life: int
     match_ia: int
+    role: Role
 
 class FindResponse(BaseModel):
     current_zone: Zone
@@ -43,8 +47,6 @@ class DefendResponse(BaseModel):
     active: bool
     match_ia: int
 
-
-
 ###### TEST
 #
 #find_response_data = {
@@ -52,11 +54,14 @@ class DefendResponse(BaseModel):
 #        "zone_id": 10,
 #        "ias": [{
 #                "id": 9,
-#                "life":1203
+#                "life":1203,
+#                "role": "BergenToy"
 #            },
 #            {
 #                "id": 10,
-#                "life":12
+#                "life":12,
+#                "role": "Player"
+#
 #            }],
 #        "triggers": {
 #            "lucky_unlucky": True,
@@ -73,6 +78,7 @@ class DefendResponse(BaseModel):
 #        }
 #    }],
 #    "status": {
+#        "role": "BergenToy",
 #        "life": 200, 
 #        "match_ia": 12 
 #    }

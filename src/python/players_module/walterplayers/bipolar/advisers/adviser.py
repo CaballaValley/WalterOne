@@ -30,13 +30,6 @@ class Adviser():
 
         for zone in find_response.neighbours_zones:
             self._graph.add_node(zone.zone_id)
-
-            # lets include the edge, avoiding taking path with lucky_unlucky
-            if find_response.current_zone.triggers.lucky_unlucky:
-                weight = 1
-            else:
-                weight = 0.5
-
             self._graph.add_edge(current_zone, zone.zone_id, weight=weight)
     
     def is_interesting_zone(self, zone):
@@ -81,6 +74,7 @@ class Adviser():
         min_life = sys.maxsize
         enemy_to_attack = None
 
+        #TODO aquí tenemos que filtrar los enemigos posibles
         for ia in find_response.current_zone.ias:
             if ia.life <= min_life:
                 enemy_to_attack = ia.id

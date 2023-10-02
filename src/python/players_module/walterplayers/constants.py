@@ -7,3 +7,8 @@ class Action(Enum):
     Attack = 1
     Defend = 2
     Move = 3
+
+class Role(str, Enum):
+    ''' Roles assigned to a player '''
+    BergenToy = 'BergenToy'
+    Player = 'Player'

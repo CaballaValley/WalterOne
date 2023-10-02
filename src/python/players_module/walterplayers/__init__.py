@@ -1,0 +1,5 @@
+from walterplayers.drunk_player import DrunkPlayer
+from walterplayers.billy_the_kid_player import BillyTheKidPlayer
+from walterplayers.johnny_walker_player import JohnnyWalkerPlayer
+from walterplayers.road_runner_player import RoadRunnerPlayer
+from walterplayers.bipolar.bipolar_player import BipolarPlayer

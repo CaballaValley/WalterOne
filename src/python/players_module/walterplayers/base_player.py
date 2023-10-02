@@ -7,7 +7,7 @@ from walterplayers.client.walterone_client import WalteroneClient
 class BasePlayer:
     ''' Abstract player with generic behavior of walterone player '''
 
-    def __init__(self, host = None, username = None, password = None, match = None):
+    def __init__(self, host=None, username=None, password=None, match=None):
         self._walteroneClient = WalteroneClient(host, username, password, match)
 
     def run(self):

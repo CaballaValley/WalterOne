@@ -75,6 +75,7 @@ class FindViewSet(ViewSet):
             ],
             'status': {
                 'life': self_match_ia.life,
-                'match_ia': self_match_ia.id
+                'match_ia': self_match_ia.id,
+                'role': self_match_ia.ia.role
             }
         })

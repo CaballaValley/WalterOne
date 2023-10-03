@@ -2,8 +2,8 @@
 from random import choice
 # third party imports
 # local imports
-from constants import Action
 from walterplayers.base_player import BasePlayer
+from walterplayers.constants import Action
 
 
 class JohnnyWalkerPlayer(BasePlayer):
@@ -11,18 +11,18 @@ class JohnnyWalkerPlayer(BasePlayer):
 
     def __init__(self, host=None, username=None, password=None, match=None):
         super().__init__(host, username, password, match)
-        self._last_action = Action.Move
+        self._last_action = Action.MOVE
 
     def choose_action(self, find_response):
-        if Action.Move == self._last_action and self.is_possible_attack(find_response):
+        if Action.MOVE == self._last_action and self.is_possible_attack(find_response):
             # last time jonnhy changed his possition, lets attack if it is possible.
-            self._last_action = Action.Attack
-            return Action.Attack, choice(self.get_id_ias(find_response))
+            self._last_action = Action.ATTACK
+            return Action.ATTACK, choice(self.get_id_ias(find_response))
 
-        if self.is_possible_move(find_response):
-            self._last_action = Action.Move
-            return Action.Move, choice(self.get_id_neighbours_zones(find_response))
-        else:
+        self._last_action = Action.MOVE
+
+        if not self.is_possible_move(find_response):
             # It wasnt possible to attack neither move.... so he cannot do anything
-            self._last_action = Action.Stop
-            return Action.Stop, None
+            return Action.STOP, None
+
+        return Action.MOVE, choice(self.get_id_neighbours_zones(find_response))

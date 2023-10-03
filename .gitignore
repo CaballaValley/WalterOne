@@ -134,3 +134,4 @@ dmypy.json
 
 
 src/python/voice_command/output.wav
+.vscode/launch.json

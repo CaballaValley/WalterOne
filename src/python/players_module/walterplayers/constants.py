@@ -3,7 +3,12 @@ from enum import Enum
 
 class Action(Enum):
     '''Actions a player can take'''
-    Stop = 0
-    Attack = 1
-    Defend = 2
-    Move = 3
+    STOP = 0
+    ATTACK = 1
+    DEFEND = 2
+    MOVE = 3
+
+class Role(str, Enum):
+    ''' Roles assigned to a player '''
+    BERGEN_TOY = 'BergenToy'
+    PLAYER = 'Player'

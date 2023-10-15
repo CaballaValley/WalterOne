@@ -21,7 +21,8 @@ class FindViewSet(ViewSet):
             "ias": [
                 {
                     "id": match_ia.ia.id,
-                    "life": match_ia.life
+                    "life": match_ia.life,
+                    "role": match_ia.ia.role
                 } for match_ia in match_ias
                 if match_ia.ia.id != self.request.user.ia.id
             ],
@@ -29,7 +30,7 @@ class FindViewSet(ViewSet):
                 'lucky_unlucky': zone.lucky_unlucky,
                 'go_ryu': zone.go_ryu,
                 'karin_gift': zone.karin_gift
-            } 
+            }
         }
 
     def retrieve(self, request):
@@ -44,7 +45,7 @@ class FindViewSet(ViewSet):
                 msg = f"User {self.request.user.ia.id} is not in match {match} {e}"
                 logging.error(msg)
                 raise PermissionDenied(msg)
-            
+
             if self_match_ia.alive:
                 match_ias = MatchIA.objects.filter(
                     match_id=match,
@@ -66,13 +67,15 @@ class FindViewSet(ViewSet):
             neighbours_zones = Zone.objects.none()
 
         return Response({
-            "current_zone": self.get_info_zone(match, self_match_ia.where_am_i),
+            "current_zone": self.get_info_zone(
+                match, self_match_ia.where_am_i),
             'neighbours_zones': [ 
                 self.get_info_zone(match, zone) for zone in neighbours_zones
                 if zone.enable
             ],
             'status': {
                 'life': self_match_ia.life,
-                'match_ia': self_match_ia.id
+                'match_ia': self_match_ia.id,
+                'role': self_match_ia.ia.role
             }
         })

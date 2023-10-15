@@ -133,3 +133,5 @@ dmypy.json
 .env.local
 
 
+src/python/voice_command/output.wav
+.vscode/launch.json

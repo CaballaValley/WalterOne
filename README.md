@@ -1,7 +1,6 @@
 # WalterOne
 API rest server for battle royal IA tournament
 
-
 # Deploy
 
 ## With docker
@@ -79,7 +78,6 @@ source .env/bin/activate
 
 python -m pip install -r config/dependencies/voice_commands_requirements.txt
 ```
-
 
 # Players setup
 

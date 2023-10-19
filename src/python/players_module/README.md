@@ -1,13 +1,19 @@
 # Players setup
 
 ## .env file
-We have added a `.env_example` file to the root of the project. You need to copy it and rename it to `.env`. 
-Then, you need to fill the variables with the correct values.
+We have added a `.env_example` file to the root of the project. You need to copy it and rename it to `.env`.
 
 ```commandline
 cp .env_example .env
 ```
-Then you need to fill the variables with the correct values.
+Then you need to fill the variables with the correct values:
+```commandline
+WALTERONE_HOST=192.168.1.1:1232
+WALTERONE_MATCH=1
+
+WALTERONE_USERNAME=YourUsername
+WALTERONE_PASSWORD=YourPassword
+```
 
 This file is going to be used in the next steps.
 
@@ -17,12 +23,13 @@ You have an example of what a player should look like in `players_module/tests/t
 If you configured the environment variables in the `.env` file correctly, you can run the tests with the following command:
 
 ```commandline
-python players_module/walterplayers/skeleton.py
+python players_module/walterplayers/skeleton.py --env .env
 ```
 You must see the following output:
 
 ```commandline
-python  walterplayers/skeleton_player.py --env .env                                                                     130 ↵ soto@renata
+> python  walterplayers/skeleton_player.py --env .env
+
 Loading .env
 2023-10-19 13:48:07.768557 - Executing Action: Action.STOP with arguments: None
 2023-10-19 13:48:07.768596 - Executed Action: Action.STOP, Error: False, Response: None
@@ -38,5 +45,5 @@ Loading .env
 
 ## ¡¡¡ IMPORTANT !!!
 ```
-If you are using a virtual environment, you must activate it before running the tests.
+If your output is not the same as the one shown above, you must review the configuration of the `.env` file.
 ```

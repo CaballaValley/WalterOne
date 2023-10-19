@@ -1,0 +1,275 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.84.0">
+  <title>WalterOne · El Angulo</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/grid/">
+
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon"  href="{% static 'web/img/apple-icon-180x180.png' %}" sizes="180x180">
+  <link rel="manifest" href="{% static 'web/img/manifest.json' %}">
+  <link rel="icon" href="{% static 'web/img/favicon.ico' %}">
+  <link rel="icon" href="{% static 'web/img/favicon-16x16.png' %}" sizes="16x16" type="image/png">
+  <link rel="icon" href="{% static 'web/img/favicon-32x32.png' %}" sizes="32x32" type="image/png">
+
+  <!-- Safari spinner -->
+  <link rel="mask-icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/safari-pinned-tab.svg"
+  color="#7952b3">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      color: #003245;
+    }
+
+    .header {
+      background-color: #003245;
+      color: #ffffff;
+      padding: 80px;
+    }
+
+    .header p {
+      font-size: 18px;
+    }
+
+    .footer {
+      background-color: #003245;
+      padding: 30px 60px;
+    }
+
+    h1 {
+      font-size: 60px;
+    }
+
+    h2 {
+      font-size: 40px;
+    }
+
+    .lead {
+      font-size: 18px;
+    }
+
+    .title-section--blue h2 {
+      color: #00EDFF;
+    }
+    
+    .title-section {
+      margin-bottom: 50px;
+    }
+
+    .api-section {
+      background-color: #00EDFF;
+      padding: 80px 0;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .divider {
+      background-color: #003245;
+      height: .5px;
+      width: 80px;
+    }
+
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'web/css/grid.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <div class="header">
+      <img src="{% static 'web/img/el-angulo-negativo.svg' %}" alt="logotype" width="200px" height="auto">
+      <div class="container">
+        <h1>WalterOne</h1>
+        <p class="lead"></p>
+        <p>This is a server batle game, the goal is win in a battle in the midle of a map.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="title-section title-section--blue">
+              <h2>Main Concepts</h2>
+              <p class="mb-4">Here we have the concepts about the game in general.</p>
+              <div class="divider"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <h5>User</h5>
+          <p>This is the user in the system with a password to can do a login.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>IA</h5>
+          <p>It's an entity related with a user and the matches to can play.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Match</h5>
+          <p>It's an entity of a game where the IA's selected can play.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Match IA</h5>
+          <p>It's an entity with a id for match/IA</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Map</h5>
+          <p>Every match has a map where the IA's can move throught the zones in the map.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Zone</h5>
+          <p>Every map has multiple zones connected between then, like a undirected
+            graph.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Triggers</h5>
+          <p>the zones could have enable 3 diferents events that the IA get for this match when go in the zone, lucky_unlucky, go_ryu, karin_gift.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Go Ryu</h5>
+          <p>When a IA get this trigger the next attack increment the damage between
+            40-50% but increment the damage received in the next attack on the same percentage, once time used you lost
+            the trigger.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Lucky Unlucky</h5>
+          <p>While a IA has enable this trigger, you have an 80% to avoid all the
+            damage from an attack and has only a 20% to do an attack, when you lost all the charges the triggers is
+            disable.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Karin gift</h5>
+          <p>When you go on a zone where this trigger is enable, you recover between
+            20-30% of your MAX life.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="api-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="title-section">
+              <h2>API REST Endpoints</h2>
+              <p class="mb-4">These are the endpoints to comunicate with the server throught the API REST, all the endpoints needs a login session active.</p>
+              <div class="divider"></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row mb-3">
+          <h5>Find(http://SERVER_HOST:PORT/find/?match=MATCH_ID)(GET)</h5>
+          <p>Endpoint to get information about users and triggers include the actual zone
+            of the IA in the match.</p>
+        </div>
+  
+        <div class="row mb-3">
+          <h5>Attack(http://SERVER_HOST:PORT/attack/)(POST)</h5>
+          <p>Endpoint to attack another user that is in the same zone with you, you no
+            need to send two parameters match=the id of the match, attack_to=the match_id of the other user, this requests
+            has a retention period of 2 seconds.</p>
+        </div>
+  
+        <div class="row mb-3">
+          <h5>Defends(http://SERVER_HOST:PORT/defends/)</h5>
+          <p>Endpoint to enable/disable defend mode to avoid the 25% of the damage received, you no need to send two parameters active=boolean with the status of the defend, match_ia=your match_ia id.</p>
+        </div>
+  
+        <div class="row mb-3">
+          <h5>Move(http://SERVER_HOST:PORT/moves/)</h5>
+          <p>Endpoint to move from your actual zone to a zone connected, you no need to
+            send two parameters to_zone=destiny zone_id, match=match id, , this requests has a retention period of 2
+            seconds.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="title-section title-section--blue">
+              <h2>Interested Links Resources</h2>
+              <p class="mb-4">These are useful links in the server.</p>
+              <div class="divider"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <h5>API REST info(http://SERVER_HOST:PORT)</h5>
+          <p>Web page with dinamic doc about the API REST.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Admin panel(http://localhost:8000/admin/)</h5>
+          <p>Default django Admin panel to manage users.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Match Panel(http://localhost:8000/admin-match-panel/)</h5>
+          <p>Admin panel to manage match, IAS and maps.</p>
+        </div>
+
+        <div class="row mb-3">
+          <h5>Info Match Panel(http://localhost:8000/web/MATCH_ID/zones/)</h5>
+          <p>Info panel with information about a match.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <img src="{% static 'web/img/el-angulo-negativo.svg' %}" alt="logotype" width="100px" height="auto">
+    </div>
+  </main>
+</body>
+
+</html>

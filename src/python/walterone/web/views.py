@@ -6,9 +6,7 @@ from django.template import loader
 from django.shortcuts import get_object_or_404
 
 
-from api.models.match import Match, MatchIA
-from api.models.map import Map
-from api.models.zone import Zone
+from api.models.match import Match
 
 ES_TIMEZONE = pytz.timezone('Europe/Madrid')
 
@@ -18,15 +16,12 @@ def zones(request, match_id):
     template = loader.get_template("match_zones.html")
     context = {
         "match_name": match.name,
-        "refresh": request.GET.get('refresh', False),
+        "refresh": request.GET.get('refresh', 5),
         "datetime": datetime.now(ES_TIMEZONE).isoformat()
     }
 
-    royal_map = get_object_or_404(Map, name="arkham")
-    zones = Zone.objects.filter(map=royal_map).order_by("name")
-
     zones_elements = []
-    for i, zone in enumerate(zones, 1):
+    for i, zone in enumerate(match.map.zone_set.all(), 1):
         n_neighbors = zone.neighbors.count()
         neighbors = [
             z.name
@@ -61,3 +56,9 @@ def zones(request, match_id):
     context["match_ias"] = ias
 
     return HttpResponse(template.render(context, request))
+
+
+def info(request):
+    template = loader.get_template("info.html")
+
+    return HttpResponse(template.render({}, request))

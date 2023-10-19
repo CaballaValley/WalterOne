@@ -74,6 +74,10 @@ class FindViewSet(ViewSet):
                 if zone.enable
             ],
             'status': {
+                'triggers': {
+                    "go_ryu": self_match_ia.go_ryu,
+                    "lucky_unlucky": self_match_ia.lucky_unlucky
+                },
                 'life': self_match_ia.life,
                 'match_ia': self_match_ia.id,
                 'role': self_match_ia.ia.role

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 from os import getenv
+from os.path import join
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +25,7 @@ SECRET_KEY = getenv("SECRET_KEY", "fooABCDEF")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv("WALTERONE_DEBUG", 0)
 
 # ALLOWED_HOSTS = os.environ.get(
 #     "DJANGO_ALLOWED_HOSTS",
@@ -127,6 +128,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = join(BASE_DIR, "static/")
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -157,7 +160,7 @@ CELERY_BROKER_URL = f'amqp://guest:guest@{RABBITMQ_HOST}:5672//'
 
 
 DAMAGE_RANGE_PERCENTAGE = getenv("DAMAGE_RANGE_PERCENTAGE", 40)
-DEFEND_RANGE_PERCENTAGE = getenv("DAMAGE_RANGE_PERCENTAGE", 25)
+DEFEND_RANGE_PERCENTAGE = getenv("DEFEND_RANGE_PERCENTAGE", 25)
 
 
 MOVE_DELAY = getenv("MOVE_DELAY", 3)

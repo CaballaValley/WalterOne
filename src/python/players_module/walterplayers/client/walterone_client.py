@@ -4,21 +4,47 @@ from walterplayers.client.dtos.responses import FindResponse, AttackResponse, Mo
 import requests
 
 
+def check_variable(env_name, value):
+    ''' Check if value is None and raise exception if it is '''
+    if not getenv(env_name) and not value:
+        all_vars = ', '.join([
+            WalteroneClient.WALTERONE_HOST,
+            WalteroneClient.WALTERONE_USERNAME,
+            WalteroneClient.WALTERONE_PASSWORD,
+            WalteroneClient.WALTERONE_MATCH
+        ])
+        raise Exception(f"Environment {env_name} is not defined. All theese "
+                        f"variables are required. Please, set these "
+                        f"variables {all_vars} in a environment .env file")
+
+
 class WalteroneClient:
     ''' Generic client to face walterone server '''
 
+    WALTERONE_HOST = "WALTERONE_HOST"
+    WALTERONE_USERNAME = "WALTERONE_USERNAME"
+    WALTERONE_PASSWORD = "WALTERONE_PASSWORD"
+    WALTERONE_MATCH = "WALTERONE_MATCH"
+
     def __init__(self, host, username, password, match):
-        self._walterone_host = getenv("WALTERONE_HOST", host)
-        self._walterone_username = getenv("WALTERONE_USERNAME", username)
-        self._walterone_password = getenv("WALTERONE_PASSWORD", password)
-        self._walterone_match = getenv("WALTERONE_MATCH", match)
+
+        check_variable(self.WALTERONE_HOST, host)
+        check_variable(self.WALTERONE_USERNAME, username)
+        check_variable(self.WALTERONE_PASSWORD, password)
+        check_variable(self.WALTERONE_MATCH, match)
+
+        self._walterone_host = getenv(self.WALTERONE_HOST, host)
+        self._walterone_match = getenv(self.WALTERONE_MATCH, match)
+
+        self._walterone_username = getenv(self.WALTERONE_USERNAME, username)
+        self._walterone_password = getenv(self.WALTERONE_PASSWORD, password)
 
         self._auth = (self._walterone_username, self._walterone_password)
 
-        self._move_endpoint = f"{self._walterone_host}/moves/"
-        self._find_endpoint = f"{self._walterone_host}/finds/?match={self._walterone_match}"
-        self._attack_endpoint = f"{self._walterone_host}/attacks/"
-        self._defend_endpoint = f"{self._walterone_host}/defends/"
+        self._move_endpoint = f"http://{self._walterone_host}/moves/"
+        self._find_endpoint = f"http://{self._walterone_host}/finds/?match={self._walterone_match}"
+        self._attack_endpoint = f"http://{self._walterone_host}/attacks/"
+        self._defend_endpoint = f"http://{self._walterone_host}/defends/"
 
     def find_current_zone(self):
         ''' Method to get information of current zone. 
@@ -33,7 +59,7 @@ class WalteroneClient:
                 print('Error while trying to find zone. Exception : ' + response.text)
                 return True, None
         except requests.exceptions.RequestException as e:
-            print ("Error while trying to find zone. ", e)
+            print("Error while trying to find zone. ", e)
             return True, None
 
     def attack(self, ia):
@@ -57,7 +83,7 @@ class WalteroneClient:
                 print('Error while trying to attack to ia ' + str(ia) + '. Exception : ' + response.text)
                 return True, None
         except requests.exceptions.RequestException as e:
-            print ("Error while trying to attack. ", e)
+            print("Error while trying to attack. ", e)
             return True, None
 
     def move_to_zone(self, to_zone):
@@ -81,7 +107,7 @@ class WalteroneClient:
                 print('Error while trying to move to zone ' + str(to_zone) + '. Exception : ' + response.text)
                 return True, None
         except requests.exceptions.RequestException as e:
-            print ("Error while trying to move. ", e)
+            print("Error while trying to move. ", e)
             return True, None
 
     def defends(self, match_ia, active):
@@ -99,32 +125,32 @@ class WalteroneClient:
 
         try:
             response = requests.post(self._defend_endpoint, auth=self._auth, data=data)
-        
+
             if response.ok:
                 return False, DefendResponse(**response.json())
             else:
                 print('Error while trying to defend with active ' + str(active) + '. Exception : ' + response.text)
                 return True, None
         except requests.exceptions.RequestException as e:
-            print ("Error while trying to defend. ", e)
+            print("Error while trying to defend. ", e)
             return True, None
 
 ###### TEST
-#client = WalteroneClient("http://127.0.0.1:8000", "jmnieto", "Gu4rma1986", "2")
+# client = WalteroneClient("http://127.0.0.1:8000", "jmnieto", "Gu4rma1986", "2")
 
-#error, find = client.find_current_zone()
-#print(error)
-#print(find.model_dump())
+# error, find = client.find_current_zone()
+# print(error)
+# print(find.model_dump())
 
-#error, attack = client.attack(9)
-#print(error)
-#print(attack.model_dump())
+# error, attack = client.attack(9)
+# print(error)
+# print(attack.model_dump())
 
-#error, move = client.move_to_zone(5)
-#print(error)
-#print(move)
+# error, move = client.move_to_zone(5)
+# print(error)
+# print(move)
 
 
-#error, defend = client.defends(2, False)
-#print(error)
-#print(defend.model_dump())
+# error, defend = client.defends(2, False)
+# print(error)
+# print(defend.model_dump())

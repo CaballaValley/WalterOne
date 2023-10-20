@@ -56,7 +56,7 @@
         background-color: #003245;
         color: #ffffff;
         display: flex;
-        padding: 60px 60px;
+        padding: 80px 60px;
     }
 
     .footer {
@@ -76,39 +76,88 @@
         font-size: 18px;
     }
 
-    .section {
-        padding: 60px 0;
+    .content {
+        padding: 80px 0;
     }
 
+    h2, h3, h4, h5, h6 {
+        font-weight: 600;
+    }
+
+    .card {
+        background-color: rgba(0,50,69,.04);
+        border: none;
+    }
+
+    .card-body {
+        padding: 1.5rem 1rem;
+    }
+
+    .bergentoy {
+        color: #2593b5;
+    }
+
+    .fa-map-pin, .fa-cube, .fa-hand-fist {
+        color: rgba(0,50,69,.5);
+    }
+
+    .user-life {
+        color:#e73636;
+    }
+
+    .buff {
+        column-gap: 10px;
+    }
+
+    .section-left {
+        margin-right: 50px;
+    }
+
+    .section-right {
+        margin-left: 20px;
+    }
 
     table {
         border-collapse: collapse;
         width: 100%;
     }
 
-    td,
+    table .fa-robot {
+        color: rgba(0,50,69,.5);
+    }
+
     th {
-        border: 1px solid #dddddd;
-        padding: 8px;
+        border-bottom: 1px solid rgba(0,50,69,.1);
+        padding: 0 8px 10px 8px;
+    }
+
+    td {
+        border-bottom: 1px solid rgba(0,50,69,.1);
+        padding: 16px 8px;
         text-align: left;
         text-transform: capitalize;
     }
 
-    tr:nth-child(even) {
-        background-color: rgba(0,50,69,.05);
+    tr td:last-child {
+        text-align: right;
+    }
+
+    .text-reloaded {
+        color: rgba(0,50,69,.6);
+        font-size: 14px;
     }
 
     @media (min-width: 1920px) {
         .container {
             max-width: 100%;
-            padding: 0 60px;
+            padding: 0 40px;
         }
     }
 
     @media (min-width: 1920px) {
         .content .container {
             max-width: 100%;
-            padding: 0 180px;
+            padding: 0 60px;
         }
     }
 </style>
@@ -118,77 +167,77 @@
         <div class="header">
             <img src="{% static 'web/img/el-angulo-negativo.svg' %}" alt="logotype" width="100px" height="auto">
             <div class="container">
-                <h1>LV-426 War</h1>
+                <h1>LV-426 War - Match status</h1>
             </div>
         </div>
         <div class="content">
             <div class="container">
                 <div class="row d-flex justify-content-between">
-                    <div class="col-7 ">
-                        <div class="section">
-                            <table>
-                                <tr>
-                                    <th>
-                                        <h5>IA</h5>
-                                    </th>
-                                    <th>
-                                        <h5>Life</h5>
-                                    </th>
-                                    <th>
-                                        <h5>Zone</h5>
-                                    </th>
-                                    <th>
-                                        <h5>Lucky unlucky</h5>
-                                    </th>
-                                    <th>
-                                        <h5>Go ryu</h5>
-                                    </th>
-                                </tr>
+                    <div class="col-9">
+                        <div class="section-left">
+                            <div class="row">
                                 {% for match_ia in match_ias %}
-                                <tr>
-                                    <td {% if match_ia.ia.role == "BergenToy" %} class=bergentoy {% endif %}>
-                                        {% if match_ia.ia.role == "BergenToy" %}
-                                        <i class="fa-solid fa-robot"></i>
-                                        {% endif %}
-                                        {{ match_ia.ia.name }}
-                                    </td>
-                                    <td>{{ match_ia.life }}</td>
-                                    <td>{{ match_ia.where_am_i.name }}</td>
-                                    <td>{{ match_ia.lucky_unlucky }}</td>
-                                    <td>{{ match_ia.go_ryu }}</td>
-                                </tr>
+                                <div class="col-sm-4">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="card-title d-flex justify-content-between">
+                                                <h4 {% if match_ia.ia.role == "BergenToy" %} class=bergentoy {% endif %}>
+                                                    {% if match_ia.ia.role == "BergenToy" %}
+                                                    <i class="fa-solid fa-robot"></i>
+                                                    {% else %}
+                                                    <i class="fa-solid fa-user"></i>
+                                                    {% endif %}
+                                                    {{ match_ia.ia.name }}
+                                                </h4>
+                                                <p class="user-life">
+                                                    <i class="fa-solid fa-heart"></i>
+                                                    {{ match_ia.life }}
+                                                </p>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="card-text text-capitalize mb-0">
+                                                    <i class="fa-solid fa-map-pin"></i>
+                                                    {{ match_ia.where_am_i.name }}
+                                                </p>
+                                                <div class="buff d-flex">
+                                                    <p class="mb-0"><i class="fa-solid fa-cube"></i> {{ match_ia.lucky_unlucky }}</p>
+                                                    <p class="mb-0"><i class="fa-solid fa-hand-fist"></i> {{ match_ia.go_ryu }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 {% endfor %}
-                            </table>
-                            
+                            </div>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="section">
+                    <div class="col-3">
+                        <div class="section-right">
                             <table>
                                 <tr>
                                     <th>
-                                        <h5>Time</h5>
+                                        <h6>Time</h6>
                                     </th>
                                     <th>
-                                        <h5>Attacker</h5>
+                                        <h6>Attacker</h6>
                                     </th>
                                     <th>
-                                        <h5>Defensor</h5>
+                                        <h6>Defensor</h6>
                                     </th>
                                     <th>
-                                        <h5>Damage</h5>
+                                        <h6>Damage</h6>
                                     </th>
                                 </tr>
                                 {% for attack in attacks %}
                                 <tr>
                                     <td >{{ attack.timestamp|date:"H:i:s" }}</td>
-                                    <td {% if attack.attack_from.role == "BergenToy" %} class=bergentoy {% endif %}>
+                                    <td>
                                         {% if attack.attack_from.role == "BergenToy" %}
                                         <i class="fa-solid fa-robot"></i>
                                         {% endif %}
                                         {{ attack.attack_from.name }}
                                     </td>
-                                    <td {% if attack.attack_to.role == "BergenToy" %} class=bergentoy {% endif %}>
+                                    <td>
                                         {% if attack.attack_to.role == "BergenToy" %}
                                         <i class="fa-solid fa-robot"></i>
                                         {% endif %}
@@ -198,14 +247,14 @@
                                 </tr>
                                 {% endfor %}
                             </table>
+                            <div class="text-reloaded d-flex justify-content-end mt-3">Reloaded on: {{datetime}}</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="footer d-flex justify-content-between">
+        <footer class="footer">
             <img src="{% static 'web/img/el-angulo-negativo.svg' %}" alt="logotype" width="100px" height="auto">
-            <div class="d-flex justify-content-end text-white align-items-center">Reloaded on: {{datetime}}</div>
         </footer>
     </main>
 </body>

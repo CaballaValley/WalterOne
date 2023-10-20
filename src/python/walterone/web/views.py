@@ -11,39 +11,17 @@ from api.models.match import Match
 ES_TIMEZONE = pytz.timezone('Europe/Madrid')
 
 
-def zones(request, match_id):
+def info_match(request, match_id):
     match = get_object_or_404(Match, id=match_id)
     template = loader.get_template("match_zones.html")
     context = {
         "match_name": match.name,
-        "refresh": request.GET.get('refresh', 5),
+        "refresh": request.GET.get('refresh', 2),
         "datetime": datetime.now(ES_TIMEZONE).isoformat()
     }
 
-    zones_elements = []
-    for i, zone in enumerate(match.map.zone_set.all(), 1):
-        n_neighbors = zone.neighbors.count()
-        neighbors = [
-            z.name
-            for z in zone.neighbors.all()
-        ]
-        zone_element = {
-            "status": "enabled" if zone.enable else "dissabled",
-            "name": zone.name,
-            "id": zone.id,
-            "number_neighbours": n_neighbors,
-            "vecinos": ", ".join(neighbors),
-            "lucky_unlucky": zone.lucky_unlucky,
-            "karin_gift": zone.karin_gift,
-            "go_ryu": zone.go_ryu,
-        }
-        zones_elements.append(zone_element)
-
-    context["zones"] = zones_elements
-
     ias = []
     for match_ia in match.matchia_set.order_by("-life"):
-        print(match_ia)
         ias.append({
             "name": match_ia.ia.name,
             "id": match_ia.id,
@@ -55,6 +33,14 @@ def zones(request, match_id):
 
     context["match_ias"] = ias
 
+    attacks_limit = request.GET.get("attacks_limit", 15)
+    attacks_qs = match.attack_set.order_by("-timestamp")[:attacks_limit]
+
+    attacks = []
+    for attack in attacks_qs:
+        attacks.append(attack)
+
+    context["attacks"] = attacks
     return HttpResponse(template.render(context, request))
 
 

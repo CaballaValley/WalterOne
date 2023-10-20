@@ -25,7 +25,7 @@ SECRET_KEY = getenv("SECRET_KEY", "fooABCDEF")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv("WALTERONE_DEBUG", 0)
+DEBUG = getenv("WALTERONE_DEBUG", 1)
 
 # ALLOWED_HOSTS = os.environ.get(
 #     "DJANGO_ALLOWED_HOSTS",

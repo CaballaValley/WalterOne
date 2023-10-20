@@ -122,8 +122,8 @@
         width: 100%;
     }
 
-    table .fa-robot {
-        color: rgba(0,50,69,.5);
+    table .fa-solid {
+        color: rgba(0,50,69,.35);
     }
 
     th {
@@ -234,6 +234,8 @@
                                     <td>
                                         {% if attack.attack_from.role == "BergenToy" %}
                                         <i class="fa-solid fa-robot"></i>
+                                        {% else %}
+                                        <i class="fa-solid fa-user"></i>
                                         {% endif %}
                                         {{ attack.attack_from.name }}
                                     </td>

@@ -1,4 +1,17 @@
 # Players setup
+Follow the next steps to use the Skeleton player as a template for your player.
+
+## Clone the repository
+
+```commandline
+git clone https://github.com/CaballaValley/WalterOne.git 
+```
+
+## Install dependencies
+```commandline
+cd WalterOne/src/python/players_module
+python -m pip install -r requirements.txt
+```
 
 ## .env file
 We have added a `.env_example` file to the root of the project. You need to copy it and rename it to `.env`.

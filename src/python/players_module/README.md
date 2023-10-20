@@ -10,7 +10,7 @@ git clone https://github.com/CaballaValley/WalterOne.git
 ## Install dependencies
 ```commandline
 cd WalterOne/src/python/players_module
-python -m pip install -r requirements.txt
+python -m pip install -e .
 ```
 
 ## .env file
@@ -21,22 +21,22 @@ cp .env_example .env
 ```
 Then you need to fill the variables with the correct values:
 ```commandline
-WALTERONE_HOST=192.168.1.1:1232
-WALTERONE_MATCH=1
+WALTERONE_HOST=192.168.1.83:8000
+WALTERONE_MATCH=2
 
-WALTERONE_USERNAME=YourUsername
-WALTERONE_PASSWORD=YourPassword
+WALTERONE_USERNAME<<<YourUsername>>>>
+WALTERONE_PASSWORD=<<<YourPassword>>>
 ```
 
 This file is going to be used in the next steps.
 
 ## Skeleton test
-You have an example of what a player should look like in `players_module/tests/test_players.py`.
+You have an example of what a player should look like in `players_module/walterplayers/skeleton_player.py`.
 
 If you configured the environment variables in the `.env` file correctly, you can run the tests with the following command:
 
 ```commandline
-python players_module/walterplayers/skeleton.py --env .env
+python walterplayers/skeleton_player.py --env .env
 ```
 You must see the following output:
 

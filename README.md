@@ -36,7 +36,6 @@ Using docker you need to access web container
 ```commandline
 docker-compose exec web bash
 ```
-Then, just follow `Locally` guide setup on previous point.
 
 ## Connect to server via web:
 

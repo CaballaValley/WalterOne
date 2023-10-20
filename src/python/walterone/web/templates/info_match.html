@@ -1,0 +1,295 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% if refresh %}
+    <meta http-equiv="refresh" content="{{refresh}}">
+    {% endif %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>WalterOne · El Angulo</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/grid/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="{% static 'web/img/apple-icon-180x180.png' %}" sizes="180x180">
+    <link rel="manifest" href="{% static 'web/img/manifest.json' %}">
+    <link rel="icon" href="{% static 'web/img/favicon.ico' %}">
+    <link rel="icon" href="{% static 'web/img/favicon-16x16.png' %}" sizes="16x16" type="image/png">
+    <link rel="icon" href="{% static 'web/img/favicon-32x32.png' %}" sizes="32x32" type="image/png">
+
+    <!-- Safari spinner -->
+    <link rel="mask-icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/safari-pinned-tab.svg"
+        color="#7952b3">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/12a931e953.js" crossorigin="anonymous"></script>
+</head>
+
+<style>
+    body {
+        font-family: 'Quicksand', sans-serif;
+        color: #003245;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        justify-content: space-between;
+    }
+
+    .header {
+        background-color: #003245;
+        color: #ffffff;
+        display: flex;
+        padding: 80px 60px;
+    }
+
+    .footer {
+        background-color: #003245;
+        padding: 20px 60px;
+    }
+
+    h1 {
+      font-size: 60px;
+    }
+
+    h2 {
+        font-size: 40px;
+    }
+
+    .lead {
+        font-size: 18px;
+    }
+
+    .content {
+        padding: 80px 0;
+    }
+
+    h2, h3, h4, h5, h6 {
+        font-weight: 600;
+    }
+
+    .card {
+        border: none;
+        border-radius: 8px;    
+    }
+
+    .card-body.disabled::before {
+        background-color: rgb(31 37 41 / 80%);
+        border-radius: 8px;
+        content: '';
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 0;
+    }
+
+    .card-body {
+        background-color: rgba(0,50,69,.04);
+        padding: 1.5rem 1rem;
+        position: relative;
+    }
+
+    .skull-crossbone {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        position: absolute;
+        width: 100%;  
+        z-index: 1;     
+    }
+
+    .bergentoy {
+        color: #2593b5;
+    }
+
+    .fa-map-pin, .fa-cube, .fa-hand-fist {
+        color: rgba(0,50,69,.5);
+    }
+
+    .user-life {
+        color:#e73636;
+    }
+
+    .buff {
+        column-gap: 10px;
+    }
+
+    .section-left {
+        margin-right: 50px;
+    }
+
+    .section-right {
+        margin-left: 20px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    table .fa-solid {
+        color: rgba(0,50,69,.35);
+    }
+
+    th {
+        border-bottom: 1px solid rgba(0,50,69,.1);
+        padding: 0 8px 10px 8px;
+    }
+
+    td {
+        border-bottom: 1px solid rgba(0,50,69,.1);
+        padding: 16px 8px;
+        text-align: left;
+        text-transform: capitalize;
+    }
+
+    tr td:last-child {
+        text-align: right;
+    }
+
+    .text-reloaded {
+        color: rgba(0,50,69,.6);
+        font-size: 14px;
+    }
+
+    @media (min-width: 1920px) {
+        .container {
+            max-width: 100%;
+            padding: 0 40px;
+        }
+    }
+
+    @media (min-width: 1920px) {
+        .content .container {
+            max-width: 100%;
+            padding: 0 60px;
+        }
+    }
+</style>
+
+<body>
+    <main>
+        <div class="header">
+            <img src="{% static 'web/img/el-angulo-negativo.svg' %}" alt="logotype" width="100px" height="auto">
+            <div class="container">
+                <h1>LV-426 War - Match status</h1>
+            </div>
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-9">
+                        <div class="section-left">
+                            <div class="row">
+                                {% for match_ia in match_ias %}
+                                <div class="col-sm-4">
+                                    <div class="card mb-4">
+                                        {% if not match_ia.alive %}
+                                        <div class="skull-crossbone">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 448 512">
+                                                <path fill="#ffffff" d="M439.15 453.06L297.17 384l141.99-69.06c7.9-3.95 11.11-13.56 7.15-21.46L432 264.85c-3.95-7.9-13.56-11.11-21.47-7.16L224 348.41 37.47 257.69c-7.9-3.95-17.51-.75-21.47 7.16L1.69 293.48c-3.95 7.9-.75 17.51 7.15 21.46L150.83 384 8.85 453.06c-7.9 3.95-11.11 13.56-7.15 21.47l14.31 28.63c3.95 7.9 13.56 11.11 21.47 7.15L224 419.59l186.53 90.72c7.9 3.95 17.51.75 21.47-7.15l14.31-28.63c3.95-7.91.74-17.52-7.16-21.47zM150 237.28l-5.48 25.87c-2.67 12.62 5.42 24.85 16.45 24.85h126.08c11.03 0 19.12-12.23 16.45-24.85l-5.5-25.87c41.78-22.41 70-62.75 70-109.28C368 57.31 303.53 0 224 0S80 57.31 80 128c0 46.53 28.22 86.87 70 109.28zM280 112c17.65 0 32 14.35 32 32s-14.35 32-32 32-32-14.35-32-32 14.35-32 32-32zm-112 0c17.65 0 32 14.35 32 32s-14.35 32-32 32-32-14.35-32-32 14.35-32 32-32z"/>
+                                            </svg>
+                                        </div>
+                                        {% endif %}
+                                        <div class="card-body {% if not match_ia.alive %} disabled {% endif %}">
+                                            <div class="card-title d-flex justify-content-between">
+                                                <h4 {% if match_ia.ia.role == "BergenToy" %} class=bergentoy {% endif %}>
+                                                    {% if match_ia.ia.role == "BergenToy" %}
+                                                    <i class="fa-solid fa-robot"></i>
+                                                    {% else %}
+                                                    <i class="fa-solid fa-user"></i>
+                                                    {% endif %}
+                                                    {{ match_ia.ia.name }}
+                                                </h4>
+                                                <p class="user-life">
+                                                    <i class="fa-solid fa-heart"></i>
+                                                    {{ match_ia.life }}
+                                                </p>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="card-text text-capitalize mb-0">
+                                                    <i class="fa-solid fa-map-pin"></i>
+                                                    {{ match_ia.where_am_i.name }}
+                                                </p>
+                                                <div class="buff d-flex">
+                                                    <p class="mb-0"><i class="fa-solid fa-cube"></i> {{ match_ia.lucky_unlucky }}</p>
+                                                    <p class="mb-0"><i class="fa-solid fa-hand-fist"></i> {{ match_ia.go_ryu }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="section-right">
+                            <table>
+                                <tr>
+                                    <th>
+                                        <h6>Time</h6>
+                                    </th>
+                                    <th>
+                                        <h6>Attacker</h6>
+                                    </th>
+                                    <th>
+                                        <h6>Defensor</h6>
+                                    </th>
+                                    <th>
+                                        <h6>Damage</h6>
+                                    </th>
+                                </tr>
+                                {% for attack in attacks %}
+                                <tr>
+                                    <td >{{ attack.timestamp|date:"H:i:s" }}</td>
+                                    <td>
+                                        {% if attack.attack_from.role == "BergenToy" %}
+                                        <i class="fa-solid fa-robot"></i>
+                                        {% else %}
+                                        <i class="fa-solid fa-user"></i>
+                                        {% endif %}
+                                        {{ attack.attack_from.name }}
+                                    </td>
+                                    <td>
+                                        {% if attack.attack_to.role == "BergenToy" %}
+                                        <i class="fa-solid fa-robot"></i>
+                                        {% endif %}
+                                        {{ attack.attack_to.name }}
+                                    </td>
+                                    <td>{{ attack.damage }}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                            <div class="text-reloaded d-flex justify-content-end mt-3">Reloaded on: {{datetime}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <img src="{% static 'web/img/el-angulo-negativo.svg' %}" alt="logotype" width="100px" height="auto">
+        </footer>
+    </main>
+</body>
+
+</html>

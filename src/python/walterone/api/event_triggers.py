@@ -73,4 +73,6 @@ def set_karin_gift(match_ia_id):
     life_recovered = int(settings.LIFE_DEFAULT*(percentage/100))
     if life_recovered + match_ia_instance.life <= settings.LIFE_DEFAULT:
         match_ia_instance.life += life_recovered
-        match_ia_instance.save()
+    else:
+        match_ia_instance.life = settings.LIFE_DEFAULT
+    match_ia_instance.save()

@@ -23,7 +23,7 @@ class DefensiveAdviser(Adviser):
 
         # It looks like we are one of the finisher players.
         if (not self._player.is_possible_move(find_response) and
-            not self._player.is_possible_attack(find_response)):
+             self._player.is_possible_attack(find_response)):
             return Action.ATTACK, self.get_weakest_enemy(find_response)
 
         # There is alredy a plan, let execute next step OR

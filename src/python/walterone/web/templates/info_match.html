@@ -263,20 +263,20 @@
                                 <tr>
                                     <td >{{ attack.timestamp|date:"H:i:s" }}</td>
                                     <td>
-                                        {% if attack.attack_from.role == "BergenToy" %}
+                                        {% if attack.attack_from_role == "BergenToy" %}
                                         <i class="fa-solid fa-robot"></i>
                                         {% else %}
                                         <i class="fa-solid fa-user"></i>
                                         {% endif %}
-                                        {{ attack.attack_from.name }}
+                                        {{ attack.attack_from }}
                                     </td>
                                     <td>
-                                        {% if attack.attack_to.role == "BergenToy" %}
+                                        {% if attack.attack_to_role == "BergenToy" %}
                                         <i class="fa-solid fa-robot"></i>
                                         {% endif %}
-                                        {{ attack.attack_to.name }}
+                                        {{ attack.attack_to }}
                                     </td>
-                                    <td>{{ attack.damage }}</td>
+                                    <td>{{ attack.compute_damage }}</td>
                                 </tr>
                                 {% endfor %}
                             </table>

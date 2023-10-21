@@ -34,7 +34,11 @@ class OffensiveAdviser(Adviser):
 
         # There is alredy a plan, let execute next step or
         # If a go ryu zone is known, player must go there
-        if self._actions_to_execute or self.check_and_update_interested_zone_path(find_response):
+        if self._actions_to_execute:
+            return self._actions_to_execute.popleft()
+
+        if (find_response.status.buff.go_ryu == 0 and
+            self.check_and_update_interested_zone_path(find_response)):
             return self._actions_to_execute.popleft()
 
         if self._player.is_possible_attack(find_response) and uniform(0,1) <= 0.6:

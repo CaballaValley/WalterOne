@@ -41,6 +41,21 @@ class Attack(Action):
             f"{self.timestamp} ({self.id}) - {self.attack_from} strikes with base damage {self.damage} to IA {attack_to_match_ia.ia}"
         )
 
+class FinalDamage(models.Model):
+    ''' Damage of an attack. '''
+    # TODO juanma obliterate me to do this
+    # please, if somebody read this code, change it in a good way with normal relations
+    attack_from = models.CharField(max_length=20, default="")
+    attack_from_role = models.CharField(max_length=20, default="BergenToy")
+    attack_to = models.CharField(max_length=20, default="")
+    attack_to_role = models.CharField(max_length=20, default="BergenToy")
+    compute_damage = models.IntegerField(
+        default=0
+    )
+    match_id = models.IntegerField(default=2)
+    timestamp = models.DateTimeField(
+        auto_now=True
+    )
 
 class Defend(models.Model):
     shield = models.IntegerField(

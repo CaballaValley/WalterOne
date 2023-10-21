@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 
 
 from api.models.match import Match
+from api.models.action import FinalDamage
 
 ES_TIMEZONE = pytz.timezone('Europe/Madrid')
 
@@ -23,9 +24,9 @@ def info_match(request, match_id):
     context["match_ias"] = [
         match_ia for match_ia in match.matchia_set.order_by("-life")]
 
-    attacks_limit = request.GET.get("attacks_limit", 15)
+    attacks_limit = request.GET.get("attacks_limit", 11)
     context["attacks"] = [
-        attack for attack in match.attack_set.order_by("-timestamp")[:attacks_limit]]
+        attack for attack in FinalDamage.objects.filter(match_id=match_id).order_by("-timestamp")[:attacks_limit]]
 
     return HttpResponse(template.render(context, request))
 

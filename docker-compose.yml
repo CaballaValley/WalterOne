@@ -7,6 +7,8 @@ services:
     container_name: walterone
     build: ./
     command: python manage.py runserver 0.0.0.0:8000
+    stdin_open: true
+    tty: true
     volumes:
       - ./src/python/walterone/:/usr/src/app/
     ports:

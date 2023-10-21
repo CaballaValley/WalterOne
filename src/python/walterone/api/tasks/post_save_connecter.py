@@ -13,7 +13,8 @@ from api.tasks.move import \
 @receiver(post_save, sender=Attack)
 def send_attack_to_celery(sender, instance, **kwargs):
     attack_task.apply_async(
-        (instance.attack_from_id,
+        (instance.id,
+         instance.attack_from_id,
          instance.attack_to_id,
          instance.match_id,
          instance.damage))

@@ -18,11 +18,16 @@ class FindViewSet(ViewSet):
             )
         return {
             "zone_id": zone.id,
+            "enable": zone.enable,
             "ias": [
                 {
                     "id": match_ia.ia.id,
                     "life": match_ia.life,
-                    "role": match_ia.ia.role
+                    "role": match_ia.ia.role,
+                    'buff': {
+                        "go_ryu": match_ia.go_ryu,
+                        "lucky_unlucky": match_ia.lucky_unlucky
+                    }
                 } for match_ia in match_ias
                 if match_ia.ia.id != self.request.user.ia.id
             ],
@@ -52,7 +57,7 @@ class FindViewSet(ViewSet):
                     where_am_i_id=self_match_ia.where_am_i.id,
                     alive=True
                 )
-                neighbours_zones = self_match_ia.where_am_i.neighbors.all()
+                neighbours_zones = self_match_ia.where_am_i.neighbors.filter(enable=True)
                 logging.info(
                     "*"*20,
                     self.request.user.ia,
@@ -71,10 +76,9 @@ class FindViewSet(ViewSet):
                 match, self_match_ia.where_am_i),
             'neighbours_zones': [ 
                 self.get_info_zone(match, zone) for zone in neighbours_zones
-                if zone.enable
             ],
             'status': {
-                'triggers': {
+                'buff': {
                     "go_ryu": self_match_ia.go_ryu,
                     "lucky_unlucky": self_match_ia.lucky_unlucky
                 },

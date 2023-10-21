@@ -3,7 +3,7 @@ from random import randint
 from django.conf import settings
 
 from api.event_triggers import attacked_lucky_unlucky, attacking_lucky_unlucky, go_ryu
-from api.models.action import Defend
+from api.models.action import Defend, FinalDamage, Attack
 from api.models.match import MatchIA
 from walterone.celery import app
 
@@ -44,7 +44,7 @@ def get_attacker_damage(match_ia, damage):
 
 
 @app.task(bind=True)
-def attack_task(self, attacker_ia_id, attacked_ia_id, match_id, damage):
+def attack_task(self, attack_id, attacker_ia_id, attacked_ia_id, match_id, damage):
     match_ia_attacked = MatchIA.objects.get(ia=attacked_ia_id, match=match_id)
     match_ia_attacker = MatchIA.objects.get(ia=attacker_ia_id, match=match_id)
 
@@ -59,13 +59,27 @@ def attack_task(self, attacker_ia_id, attacked_ia_id, match_id, damage):
         match_ia_attacker.lucky_unlucky -= 1
         match_ia_attacker.save()
 
+    final_damage = 0
     if not is_lucky or not is_unlucky:
         reduced = get_defend_value(match_ia_attacked, damage)
         induced = get_attacker_damage(match_ia_attacker, damage)
 
         final_damage = induced - reduced
-        match_ia_attacked.life -= final_damage if final_damage > 0 else 0
+        if final_damage < 0:
+            final_damage = 0
+
+        match_ia_attacked.life -= final_damage
+
 
     match_ia_attacked.alive = match_ia_attacked.life >= 0
 
     match_ia_attacked.save()
+
+    damage = FinalDamage.objects.create(
+        match_id=match_id,
+        compute_damage=final_damage,
+        attack_to=match_ia_attacked.ia.name,
+        attack_to_role=match_ia_attacked.ia.role,
+        attack_from_role=match_ia_attacker.ia.role,
+        attack_from=match_ia_attacker.ia.name)
+    damage.save()

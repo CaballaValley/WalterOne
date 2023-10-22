@@ -31,6 +31,21 @@ def info_match(request, match_id):
     return HttpResponse(template.render(context, request))
 
 
+def info_match_zones(request, match_id):
+    match = get_object_or_404(Match, id=match_id)
+    template = loader.get_template("info_match_zones.html")
+    context = {
+        "match_name": match.name,
+        "refresh": request.GET.get('refresh', 2),
+        "datetime": datetime.now(ES_TIMEZONE).isoformat()
+    }
+
+    context["match_zones"] = [
+        match_zone for match_zone in match.map.zone_set.all()]
+
+    return HttpResponse(template.render(context, request))
+
+
 def info(request):
     template = loader.get_template("info.html")
 

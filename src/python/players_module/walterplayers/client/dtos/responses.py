@@ -62,3 +62,12 @@ class DefendResponse(BaseModel):
     ''' Response for defend resquest '''
     active: bool
     match_ia: int
+
+class ErrorResponse():
+    ''' Useful Error Response for any request '''
+    def __init__(self, argument, error):
+        self.argument = argument
+        self.error = error
+
+    def __str__(self):
+        return self.error

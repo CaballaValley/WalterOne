@@ -57,4 +57,4 @@ class BipolarPlayer(BasePlayer):
             and Action.MOVE == executed_action
             and response):
             for adviser in self._advisers.values():
-                adviser.remove_zone(response.to_zone)
+                adviser.remove_zone(response.argument)

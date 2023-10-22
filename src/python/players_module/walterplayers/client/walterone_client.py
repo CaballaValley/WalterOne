@@ -1,5 +1,5 @@
 from os import getenv
-from walterplayers.client.dtos.responses import FindResponse, AttackResponse, MoveResponse, DefendResponse
+from walterplayers.client.dtos.responses import FindResponse, AttackResponse, MoveResponse, DefendResponse, ErrorResponse
 
 import requests
 
@@ -57,10 +57,10 @@ class WalteroneClient:
                 return False, FindResponse(**response.json())
             else:
                 print('Error while trying to find zone. Exception : ' + response.text)
-                return True, None
+                return True, ErrorResponse(None, response.text)
         except requests.exceptions.RequestException as e:
             print("Error while trying to find zone. ", e)
-            return True, None
+            return True, ErrorResponse(None, e.strerror)
 
     def attack(self, ia):
         ''' Method to attack to another ia.
@@ -81,10 +81,10 @@ class WalteroneClient:
                 return False, AttackResponse(**response.json())
             else:
                 print('Error while trying to attack to ia ' + str(ia) + '. Exception : ' + response.text)
-                return True, None
+                return True, ErrorResponse(ia, response.text)
         except requests.exceptions.RequestException as e:
             print("Error while trying to attack. ", e)
-            return True, None
+            return True, ErrorResponse(ia, e.strerror)
 
     def move_to_zone(self, to_zone):
         ''' Method to your ia to another zone.
@@ -105,10 +105,10 @@ class WalteroneClient:
                 return False, MoveResponse(**response.json())
             else:
                 print('Error while trying to move to zone ' + str(to_zone) + '. Exception : ' + response.text)
-                return True, None
+                return True, ErrorResponse(to_zone, response.text)
         except requests.exceptions.RequestException as e:
             print("Error while trying to move. ", e)
-            return True, None
+            return True, ErrorResponse(to_zone, e.strerror)
 
     def defends(self, match_ia, active):
         ''' Chanfe your defend mode.
@@ -130,27 +130,7 @@ class WalteroneClient:
                 return False, DefendResponse(**response.json())
             else:
                 print('Error while trying to defend with active ' + str(active) + '. Exception : ' + response.text)
-                return True, None
+                return True, ErrorResponse(active, response.text)
         except requests.exceptions.RequestException as e:
             print("Error while trying to defend. ", e)
-            return True, None
-
-###### TEST
-# client = WalteroneClient("http://127.0.0.1:8000", "jmnieto", "Gu4rma1986", "2")
-
-# error, find = client.find_current_zone()
-# print(error)
-# print(find.model_dump())
-
-# error, attack = client.attack(9)
-# print(error)
-# print(attack.model_dump())
-
-# error, move = client.move_to_zone(5)
-# print(error)
-# print(move)
-
-
-# error, defend = client.defends(2, False)
-# print(error)
-# print(defend.model_dump())
+            return True, ErrorResponse(active, e.strerror)

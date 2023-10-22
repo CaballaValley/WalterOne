@@ -56,30 +56,15 @@ def match_data(request, match_id):
     links = []
     for zone in Zone.objects.filter(map=match.map):
         nodes.append(
-            {"name": zone.name.capitalize(), "group": 1}
+            {"id": zone.name.capitalize(), "group": 1}
         )
-        for n in zone.neighbors.all():
-            links.append(
-                {"source": zone.name.capitalize(),
-                 "target": n.name.capitalize(),
-                 "value": 1}
-            )
+        for neighbour in zone.neighbors.all():
+            links.append({
+                "source": zone.name.capitalize(),
+                "target": neighbour.name.capitalize(),
+                "value": 1
+            })
 
-    # nodes = [
-    #     {"name": "Myriel", "group": 1},
-    #     {"name": "Napoleon", "group": 1},
-    #     {"name": "Mlle.Baptistine", "group": 1},
-    #     {"name": "Mme.Magloire", "group": 1},
-    #     {"name": "CountessdeLo", "group": 1},
-    # ]
-    # links = [
-    #     {"source": 1, "target": 0, "value": 1},
-    #     {"source": 2, "target": 0, "value": 8},
-    #     {"source": 3, "target": 0, "value": 10},
-    #     {"source": 3, "target": 2, "value": 6},
-    #     {"source": 4, "target": 0, "value": 1},
-    #     {"source": 5, "target": 0, "value": 1},
-    # ]
     return JsonResponse(
         {
             "nodes": nodes,
